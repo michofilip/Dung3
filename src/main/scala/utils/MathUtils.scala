@@ -5,10 +5,20 @@ object MathUtils {
     
     def bound(x: Int, min: Int, max: Int): Int = if (x < min) min else if (x < max) x else max
     
-    implicit class MathUtilsImplicit(x: Int) {
+    def ceil(x: Double): Int = Math.ceil(x).toInt
+    
+    def floor(x: Double): Int = Math.floor(x).toInt
+    
+    implicit class MathUtilsImplicitInt(x: Int) {
         def mod(n: Int): Int = MathUtils.mod(x, n)
         
         def bound(min: Int, max: Int): Int = MathUtils.bound(x, min, max)
+    }
+    
+    implicit class MathUtilsImplicitDouble(x: Double) {
+        def ceil(): Int = MathUtils.ceil(x)
+        
+        def floor(): Int = MathUtils.floor(x)
     }
     
 }
