@@ -9,16 +9,4 @@ object MathUtils {
     
     def floor(x: Double): Int = Math.floor(x).toInt
     
-    implicit class MathUtilsImplicitInt(x: Int) {
-        def mod(n: Int): Int = MathUtils.mod(x, n)
-        
-        def bound(min: Int, max: Int): Int = MathUtils.bound(x, min, max)
-    }
-    
-    implicit class MathUtilsImplicitDouble(x: Double) {
-        def ceil(): Int = MathUtils.ceil(x)
-        
-        def floor(): Int = MathUtils.floor(x)
-    }
-    
 }
