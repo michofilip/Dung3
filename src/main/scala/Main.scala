@@ -13,5 +13,7 @@ object Main extends App {
     val entityFactory = new EntityFactory()
     val testDoor = entityFactory.makeTestDoor()
     println(testDoor)
+    println(testDoor.animationOpt.map(a => a.frame(2000)))
     println(testDoor.close())
+    println(testDoor.close().animationOpt.map(a => a.frame(2000)))
 }

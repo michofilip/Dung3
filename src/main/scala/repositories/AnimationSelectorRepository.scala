@@ -7,8 +7,8 @@ import model.{AnimationSelector, EntityName}
 class AnimationSelectorRepository(implicit animationRepository: AnimationRepository) {
     
     private val testDoorAnimationSelector = AnimationSelector(
-        (Some(Open), None) -> animationRepository.testDoorAnimation1,
-        (Some(Close), None) -> animationRepository.testDoorAnimation2
+        (Some(Open), None) -> animationRepository.testDoorAnimationOpen,
+        (Some(Close), None) -> animationRepository.testDoorAnimationClose
     )
     
     private val animationSelectors: Map[EntityName, AnimationSelector] = Map(TestDoor -> testDoorAnimationSelector)
