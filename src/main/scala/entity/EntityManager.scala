@@ -2,7 +2,8 @@ package entity
 
 import model.EntityState.{Close, Open}
 import model.EntityType.Door
-import model.{Animation, AnimationSelector, Direction, EntityState, Physics, PhysicsSelector, Position}
+import model.{Animation, AnimationSelector, Direction, EntityState, Frame, Physics, PhysicsSelector, Position}
+import utils.Timestamp
 
 object EntityManager {
     
@@ -52,6 +53,10 @@ object EntityManager {
         
         def removeAnimationSelector(): Entity = entity.copy(animationSelectorOpt = None)
         
+        def setAnimationTimestamp(animationTimestamp: Timestamp): Entity = entity.copy(animationTimestampOpt = Some(animationTimestamp))
+        
+        def removeAnimationTimestamp(): Entity = entity.copy(animationTimestampOpt = None)
+        
         def selectAnimation(): Entity = entity.animationSelectorOpt match {
             case Some(animationSelector) => animationSelector.select(entity.entityStateOpt, entity.directionOpt) match {
                 case Some(animation) => setAnimation(animation)
@@ -59,16 +64,27 @@ object EntityManager {
             }
             case None => entity
         }
+        
+        def getFrame(timestamp: Timestamp): Option[Frame] =
+            entity.animationOpt.map(_.frame(timestamp.time - entity.animationTimestampOpt.map(_.time).getOrElse(0L)))
     }
     
     implicit class DoorManager(entity: Entity) {
-        def open(): Entity = (entity.entityType, entity.entityStateOpt) match {
-            case (Door, Some(Close)) => entity.setEntityState(Open).selectPhysics().selectAnimation()
+        def open(timestamp: Timestamp): Entity = (entity.entityType, entity.entityStateOpt) match {
+            case (Door, Some(Close)) => entity
+                    .setEntityState(Open)
+                    .setAnimationTimestamp(timestamp)
+                    .selectPhysics()
+                    .selectAnimation()
             case _ => entity
         }
         
-        def close(): Entity = (entity.entityType, entity.entityStateOpt) match {
-            case (Door, Some(Open)) => entity.setEntityState(Close).selectPhysics().selectAnimation()
+        def close(timestamp: Timestamp): Entity = (entity.entityType, entity.entityStateOpt) match {
+            case (Door, Some(Open)) => entity
+                    .setEntityState(Close)
+                    .setAnimationTimestamp(timestamp)
+                    .selectPhysics()
+                    .selectAnimation()
             case _ => entity
         }
     }

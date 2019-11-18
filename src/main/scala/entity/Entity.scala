@@ -1,6 +1,7 @@
 package entity
 
 import model.{Animation, AnimationSelector, Direction, EntityName, EntityState, EntityType, Physics, PhysicsSelector, Position}
+import utils.Timestamp
 
 case class Entity(id: Long,
                   entityName: EntityName,
@@ -11,4 +12,5 @@ case class Entity(id: Long,
                   physicsOpt: Option[Physics] = None,
                   physicsSelectorOpt: Option[PhysicsSelector] = None,
                   animationOpt: Option[Animation] = None,
-                  animationSelectorOpt: Option[AnimationSelector] = None)
+                  animationSelectorOpt: Option[AnimationSelector] = None,
+                  animationTimestampOpt: Option[Timestamp] = None)

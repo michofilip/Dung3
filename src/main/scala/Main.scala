@@ -1,6 +1,7 @@
 import entity.EntityFactory
 import entity.EntityManager._
 import repositories.{AnimationRepository, AnimationSelectorRepository, EntityTypeRepository, ImageRepository, PhysicsRepository, PhysicsSelectorRepository}
+import utils.Timestamp
 
 object Main extends App {
     implicit val imageRepository: ImageRepository = new ImageRepository()
@@ -10,10 +11,14 @@ object Main extends App {
     implicit val animationRepository: AnimationRepository = new AnimationRepository()
     implicit val animationSelectorRepository: AnimationSelectorRepository = new AnimationSelectorRepository()
     
+    val creationTimestamp = Timestamp(0)
+    val stateChangeTimestamp = Timestamp(1000)
+    val getFrameTimestamp = Timestamp(3000)
+    
     val entityFactory = new EntityFactory()
-    val testDoor = entityFactory.makeTestDoor()
+    val testDoor = entityFactory.makeTestDoor(creationTimestamp)
     println(testDoor)
-    println(testDoor.animationOpt.map(a => a.frame(2000)))
-    println(testDoor.close())
-    println(testDoor.close().animationOpt.map(a => a.frame(2000)))
+    println(testDoor.getFrame(getFrameTimestamp))
+    println(testDoor.close(stateChangeTimestamp))
+    println(testDoor.close(stateChangeTimestamp).getFrame(getFrameTimestamp))
 }

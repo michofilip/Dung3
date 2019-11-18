@@ -5,12 +5,13 @@ import model.EntityName.TestDoor
 import model.EntityState.Open
 import model.Position
 import repositories.{AnimationSelectorRepository, EntityTypeRepository, PhysicsSelectorRepository}
+import utils.Timestamp
 
 class EntityFactory(implicit
                     entityTypeRepository: EntityTypeRepository,
                     physicsSelectorRepository: PhysicsSelectorRepository,
                     animationSelectorRepository: AnimationSelectorRepository) {
-    def makeTestDoor(): Entity = {
+    def makeTestDoor(timestamp: Timestamp): Entity = {
         val name = TestDoor
         val entType = entityTypeRepository.getEntityType(name).getOrElse(throw new NoSuchElementException)
         val position = Position(10, 20)
@@ -22,6 +23,7 @@ class EntityFactory(implicit
                 .setPosition(position)
                 .setPhysicsSelector(physicsSelector)
                 .setAnimationSelector(animationSelector)
+                .setAnimationTimestamp(timestamp)
                 .selectPhysics()
                 .selectAnimation()
     }
