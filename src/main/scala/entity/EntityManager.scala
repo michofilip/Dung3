@@ -3,7 +3,7 @@ package entity
 import model.EntityState.{Close, Open}
 import model.EntityType.Door
 import model.{Animation, AnimationSelector, Direction, EntityState, Frame, Physics, PhysicsSelector, Position}
-import utils.Timestamp
+import temporal.Timestamp
 
 object EntityManager {
     
