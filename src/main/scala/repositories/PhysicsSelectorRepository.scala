@@ -8,7 +8,6 @@ class PhysicsSelectorRepository(implicit physicsRepository: PhysicsRepository) {
     private val openPhysics = physicsRepository.physicsFF
     private val closePhysics = physicsRepository.physicsTT
     
-    //    val testDoorPS = PhysicsSelector(Map(Some(Open) -> openPhysics, None -> closePhysics))
     private val testDoorPhysicsSelector = PhysicsSelector(
         Some(Open) -> openPhysics,
         Some(Close) -> closePhysics
