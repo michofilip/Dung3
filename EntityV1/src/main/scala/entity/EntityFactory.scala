@@ -5,7 +5,7 @@ import model.EntityName.TestDoor
 import model.EntityState.Open
 import model.Position
 import repositories.{AnimationSelectorRepository, EntityTypeRepository, PhysicsSelectorRepository}
-import temporal.Timestamp
+import commons.temporal.Timestamp
 
 class EntityFactory(implicit
                     entityTypeRepository: EntityTypeRepository,

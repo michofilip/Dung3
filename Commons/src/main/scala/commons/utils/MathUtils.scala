@@ -1,4 +1,4 @@
-package utils
+package commons.utils
 
 object MathUtils {
     def mod(x: Int, n: Int): Int = if (x < 0) x % n + n else if (x < n) x else x % n

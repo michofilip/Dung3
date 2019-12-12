@@ -1,4 +1,4 @@
-package temporal
+package commons.temporal
 
 case class Duration(time: Long)
 

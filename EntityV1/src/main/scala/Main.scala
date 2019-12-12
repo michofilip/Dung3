@@ -1,8 +1,8 @@
 import entity.EntityFactory
 import entity.EntityManager._
 import repositories.{AnimationRepository, AnimationSelectorRepository, EntityTypeRepository, ImageRepository, PhysicsRepository, PhysicsSelectorRepository}
-import temporal.Duration.ImplicitDuration
-import temporal.Timestamp
+import commons.temporal.Duration.ImplicitDuration
+import commons.temporal.Timestamp
 
 object Main extends App {
     implicit val imageRepository: ImageRepository = new ImageRepository()

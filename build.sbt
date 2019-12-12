@@ -6,6 +6,12 @@ lazy val commonSettings = Seq(
     scalaVersion := "2.13.1"
 )
 
+lazy val Commons = project
+        .settings(
+            commonSettings,
+            libraryDependencies ++= Dependencies.commonsDependencies
+        )
+
 lazy val EntityV1 = project
         .dependsOn(Commons)
         .settings(
@@ -13,8 +19,9 @@ lazy val EntityV1 = project
             libraryDependencies ++= Dependencies.entityV1Dependencies
         )
 
-lazy val Commons = project
+lazy val EntityV2 = project
+        .dependsOn(Commons)
         .settings(
             commonSettings,
-            libraryDependencies ++= Dependencies.commonsDependencies
+            libraryDependencies ++= Dependencies.entityV1Dependencies
         )

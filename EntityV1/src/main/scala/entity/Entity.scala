@@ -1,7 +1,7 @@
 package entity
 
 import model.{Animation, AnimationSelector, Direction, EntityName, EntityState, EntityType, Physics, PhysicsSelector, Position}
-import temporal.Timestamp
+import commons.temporal.Timestamp
 
 case class Entity(id: Long,
                   entityName: EntityName,

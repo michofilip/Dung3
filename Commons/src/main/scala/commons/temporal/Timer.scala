@@ -1,4 +1,4 @@
-package temporal
+package commons.temporal
 
 case class Timer(initialTimestamp: Timestamp, isRunning: Boolean) {
     private val creationTimestamp: Timestamp = Timestamp.now

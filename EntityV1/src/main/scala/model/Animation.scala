@@ -1,6 +1,6 @@
 package model
 
-import utils.MathUtils.{bound, floor, mod}
+import commons.utils.MathUtils.{bound, floor, mod}
 
 case class Animation(looped: Boolean, fps: Double, frames: Vector[Frame]) {
     private val length = frames.length
