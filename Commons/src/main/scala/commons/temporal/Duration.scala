@@ -1,6 +1,14 @@
 package commons.temporal
 
-case class Duration(time: Long)
+case class Duration(time: Long) {
+    def unary_+ : Duration = this
+    
+    def unary_- : Duration = Duration(-time)
+    
+    def +(that: Duration): Duration = Duration(time + that.time)
+    
+    def -(that: Duration): Duration = this + -that
+}
 
 object Duration {
     
