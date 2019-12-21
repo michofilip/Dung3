@@ -1,4 +1,4 @@
-name := "Entity"
+name := "Dung2Experimental"
 
 lazy val commonSettings = Seq(
     //    organization := "com.example",
@@ -23,5 +23,12 @@ lazy val EntityV2 = project
         .dependsOn(Commons)
         .settings(
             commonSettings,
-            libraryDependencies ++= Dependencies.entityV1Dependencies
+            libraryDependencies ++= Dependencies.entityV2Dependencies
+        )
+
+lazy val ValueV1 = project
+        .dependsOn(Commons)
+        .settings(
+            commonSettings,
+            libraryDependencies ++= Dependencies.valueV1Dependencies
         )
