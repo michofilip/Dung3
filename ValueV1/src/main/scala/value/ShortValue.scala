@@ -1,19 +1,11 @@
 package value
 
+import value.utils.Caster
+
 abstract class ShortValue extends Value with NumericValue {
     override final protected type T = Short
     
     override final def calculate: ShortValue = ShortValue.ShortCalculate(this)
-    
-    override protected[value] def compare(value: ComparableValue): Option[Int] = get.flatMap(v1 => value.get match {
-        case Some(v2: Byte) => Some(v1 compareTo v2.toShort)
-        case Some(v2: Short) => Some(v1 compareTo v2)
-        case Some(v2: Int) => Some(v1.toInt compareTo v2)
-        case Some(v2: Long) => Some(v1.toLong compareTo v2)
-        case Some(v2: Float) => Some(v1.toFloat compareTo v2)
-        case Some(v2: Double) => Some(v1.toDouble compareTo v2)
-        case None => None
-    })
     
     final def unary_+ : ShortValue = this
     
@@ -122,15 +114,7 @@ object ShortValue {
     }
     
     final case class NumericToShort(value: NumericValue) extends ShortValue {
-        override def get: Option[Short] = value.get match {
-            case Some(v: Byte) => Some(v.toShort)
-            case Some(v: Short) => Some(v.toShort)
-            case Some(v: Int) => Some(v.toShort)
-            case Some(v: Long) => Some(v.toShort)
-            case Some(v: Float) => Some(v.toShort)
-            case Some(v: Double) => Some(v.toShort)
-            case _ => None
-        }
+        override def get: Option[Short] = value.get.flatMap(Caster.toShort)
     }
     
 }

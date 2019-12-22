@@ -1,19 +1,11 @@
 package value
 
+import value.utils.Caster
+
 abstract class LongValue extends Value with NumericValue {
     override final protected type T = Long
     
     override final def calculate: LongValue = LongValue.LongCalculate(this)
-    
-    override protected[value] def compare(value: ComparableValue): Option[Int] = get.flatMap(v1 => value.get match {
-        case Some(v2: Byte) => Some(v1 compareTo v2.toLong)
-        case Some(v2: Short) => Some(v1 compareTo v2.toLong)
-        case Some(v2: Int) => Some(v1 compareTo v2.toLong)
-        case Some(v2: Long) => Some(v1 compareTo v2)
-        case Some(v2: Float) => Some(v1.toDouble compareTo v2.toDouble)
-        case Some(v2: Double) => Some(v1.toDouble compareTo v2)
-        case None => None
-    })
     
     final def unary_+ : LongValue = this
     
@@ -122,15 +114,7 @@ object LongValue {
     }
     
     final case class NumericToLong(value: NumericValue) extends LongValue {
-        override def get: Option[Long] = value.get match {
-            case Some(v: Byte) => Some(v.toLong)
-            case Some(v: Short) => Some(v.toLong)
-            case Some(v: Int) => Some(v.toLong)
-            case Some(v: Long) => Some(v.toLong)
-            case Some(v: Float) => Some(v.toLong)
-            case Some(v: Double) => Some(v.toLong)
-            case _ => None
-        }
+        override def get: Option[Long] = value.get.flatMap(Caster.toLong)
     }
     
 }

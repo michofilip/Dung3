@@ -1,9 +1,13 @@
 package value
 
+import value.StringValue.CharToString
+
 abstract class StringValue extends Value {
     override final protected type T = String
     
     override final def calculate: StringValue = StringValue.StringCalculate(this)
+    
+    final def +(that: CharValue): StringValue = StringValue.Concatenate(this, CharToString(that))
     
     final def +(that: StringValue): StringValue = StringValue.Concatenate(this, that)
     
@@ -44,6 +48,10 @@ object StringValue {
             case Some(v: Double) => Some(v.toString)
             case _ => None
         }
+    }
+    
+    final case class CharToString(value: CharValue) extends StringValue {
+        override def get: Option[String] = value.get.map(v => v.toString)
     }
     
 }

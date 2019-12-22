@@ -1,19 +1,11 @@
 package value
 
+import value.utils.Caster
+
 abstract class IntValue extends Value with NumericValue {
     override final protected type T = Int
     
     override final def calculate: IntValue = IntValue.IntCalculate(this)
-    
-    override protected[value] def compare(value: ComparableValue): Option[Int] = get.flatMap(v1 => value.get match {
-        case Some(v2: Byte) => Some(v1 compareTo v2.toInt)
-        case Some(v2: Short) => Some(v1 compareTo v2.toInt)
-        case Some(v2: Int) => Some(v1 compareTo v2)
-        case Some(v2: Long) => Some(v1.toLong compareTo v2)
-        case Some(v2: Float) => Some(v1.toDouble compareTo v2.toDouble)
-        case Some(v2: Double) => Some(v1.toDouble compareTo v2)
-        case None => None
-    })
     
     final def unary_+ : IntValue = this
     
@@ -123,15 +115,7 @@ object IntValue {
     }
     
     final case class NumericToInt(value: NumericValue) extends IntValue {
-        override def get: Option[Int] = value.get match {
-            case Some(v: Byte) => Some(v.toInt)
-            case Some(v: Short) => Some(v.toInt)
-            case Some(v: Int) => Some(v.toInt)
-            case Some(v: Long) => Some(v.toInt)
-            case Some(v: Float) => Some(v.toInt)
-            case Some(v: Double) => Some(v.toInt)
-            case _ => None
-        }
+        override def get: Option[Int] = value.get.flatMap(Caster.toInt)
     }
     
 }

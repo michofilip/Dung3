@@ -73,19 +73,19 @@ object BooleanValue {
     }
     
     final case class Less(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-        override def get: Option[Boolean] = value1.compare(value2).map(_ < 0)
+        override def get: Option[Boolean] = value1.compareTo(value2).map(_ < 0)
     }
     
     final case class LessEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-        override def get: Option[Boolean] = value1.compare(value2).map(_ <= 0)
+        override def get: Option[Boolean] = value1.compareTo(value2).map(_ <= 0)
     }
     
     final case class Greater(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-        override def get: Option[Boolean] = value1.compare(value2).map(_ > 0)
+        override def get: Option[Boolean] = value1.compareTo(value2).map(_ > 0)
     }
     
     final case class GreaterEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-        override def get: Option[Boolean] = value1.compare(value2).map(_ >= 0)
+        override def get: Option[Boolean] = value1.compareTo(value2).map(_ >= 0)
     }
     
 }

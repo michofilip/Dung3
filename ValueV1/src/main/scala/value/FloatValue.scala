@@ -1,19 +1,11 @@
 package value
 
+import value.utils.Caster
+
 abstract class FloatValue extends Value with NumericValue {
     override final protected type T = Float
     
     override final def calculate: FloatValue = FloatValue.FloatCalculate(this)
-    
-    override protected[value] def compare(value: ComparableValue): Option[Int] = get.flatMap(v1 => value.get match {
-        case Some(v2: Byte) => Some(v1 compareTo v2.toFloat)
-        case Some(v2: Short) => Some(v1 compareTo v2.toFloat)
-        case Some(v2: Int) => Some(v1 compareTo v2.toFloat)
-        case Some(v2: Long) => Some(v1.toDouble compareTo v2.toDouble)
-        case Some(v2: Float) => Some(v1 compareTo v2)
-        case Some(v2: Double) => Some(v1.toDouble compareTo v2)
-        case None => None
-    })
     
     final def unary_+ : FloatValue = this
     
@@ -109,15 +101,7 @@ object FloatValue {
     }
     
     final case class NumericToFloat(value: NumericValue) extends FloatValue {
-        override def get: Option[Float] = value.get match {
-            case Some(v: Byte) => Some(v.toFloat)
-            case Some(v: Short) => Some(v.toFloat)
-            case Some(v: Int) => Some(v.toFloat)
-            case Some(v: Long) => Some(v.toFloat)
-            case Some(v: Float) => Some(v.toFloat)
-            case Some(v: Double) => Some(v.toFloat)
-            case _ => None
-        }
+        override def get: Option[Float] = value.get.flatMap(Caster.toFloat)
     }
     
 }
