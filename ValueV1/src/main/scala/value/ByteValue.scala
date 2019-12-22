@@ -1,6 +1,6 @@
 package value
 
-import value.utils.Caster
+import utils.Caster
 
 abstract class ByteValue extends Value with NumericValue {
     override final protected type T = Byte

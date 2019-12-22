@@ -1,6 +1,6 @@
 package value
 
-import value.utils.Comparators
+import utils.Comparators
 
 trait NumericValue extends Value with ComparableValue {
     

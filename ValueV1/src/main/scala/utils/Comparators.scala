@@ -1,4 +1,4 @@
-package value.utils
+package utils
 
 object Comparators {
     def compareAnyVal(x: AnyVal, y: AnyVal): Option[Int] = (x, y) match {
@@ -46,5 +46,4 @@ object Comparators {
         
         case _ => None
     }
-    
 }

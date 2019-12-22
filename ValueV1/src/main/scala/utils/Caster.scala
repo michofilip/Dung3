@@ -1,4 +1,4 @@
-package value.utils
+package utils
 
 object Caster {
     def toByte(value: AnyVal): Option[Byte] = value match {
