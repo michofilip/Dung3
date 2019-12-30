@@ -26,6 +26,13 @@ lazy val EntityV2 = project
             libraryDependencies ++= Dependencies.entityV2Dependencies
         )
 
+lazy val EntityV3 = project
+        .dependsOn(Commons)
+        .settings(
+            commonSettings,
+            libraryDependencies ++= Dependencies.entityV3Dependencies
+        )
+
 lazy val ValueV1 = project
         .dependsOn(Commons)
         .settings(
