@@ -1,15 +1,15 @@
 package repository
 
 import entity.Entity
-import model.Coordinates
+import model.position.Coordinates
 
 class EntityRepository private(private val entitiesById: Map[Long, Entity],
                                private val entitiesByCoordinates: Map[Coordinates, Map[Long, Entity]]) {
     
-    def add(entity: Entity): EntityRepository = {
+    def +(entity: Entity): EntityRepository = {
         val newEntitiesById = entitiesById + (entity.id -> entity)
         
-        val newEntitiesByCoordinates = entity.coordinatesOpt.map(coordinates => {
+        val newEntitiesByCoordinates = entity.positionOpt.map(_.coordinates).map(coordinates => {
             val newEntitiesAtCoordinates = entitiesByCoordinates.getOrElse(coordinates, Map.empty) + (entity.id -> entity)
             entitiesByCoordinates + (coordinates -> newEntitiesAtCoordinates)
         }).getOrElse(entitiesByCoordinates)
@@ -17,17 +17,13 @@ class EntityRepository private(private val entitiesById: Map[Long, Entity],
         new EntityRepository(newEntitiesById, newEntitiesByCoordinates)
     }
     
-    def +(entity: Entity): EntityRepository = add(entity)
-    
-    def addAll(entities: Seq[Entity]): EntityRepository =
+    def ++(entities: Seq[Entity]): EntityRepository =
         entities.foldLeft(this)((entityRepository, entity) => entityRepository + entity)
     
-    def ++(entities: Seq[Entity]): EntityRepository = addAll(entities)
-    
-    def remove(entity: Entity): EntityRepository = {
+    def -(entity: Entity): EntityRepository = {
         val newEntitiesById = entitiesById - entity.id
         
-        val newEntitiesByCoordinates = entity.coordinatesOpt.map(coordinates => {
+        val newEntitiesByCoordinates = entity.positionOpt.map(_.coordinates).map(coordinates => {
             val newEntitiesAtCoordinates = entitiesByCoordinates.getOrElse(coordinates, Map.empty) - entity.id
             if (newEntitiesAtCoordinates.isEmpty) entitiesByCoordinates - coordinates
             else entitiesByCoordinates + (coordinates -> newEntitiesAtCoordinates)
@@ -36,12 +32,8 @@ class EntityRepository private(private val entitiesById: Map[Long, Entity],
         new EntityRepository(newEntitiesById, newEntitiesByCoordinates)
     }
     
-    def -(entity: Entity): EntityRepository = remove(entity)
-    
-    def removeAll(entities: Seq[Entity]): EntityRepository =
+    def --(entities: Seq[Entity]): EntityRepository =
         entities.foldLeft(this)((entityRepository, entity) => entityRepository - entity)
-    
-    def --(entities: Seq[Entity]): EntityRepository = removeAll(entities)
     
     def contains(id: Long): Boolean = entitiesById.contains(id)
     

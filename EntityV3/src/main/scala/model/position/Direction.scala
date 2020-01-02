@@ -1,4 +1,4 @@
-package model
+package model.position
 
 sealed abstract class Direction {
     val azimuth: Int
