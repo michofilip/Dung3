@@ -5,8 +5,6 @@ import utils.Caster
 abstract class IntValue extends Value with NumericValue {
     override final protected type T = Int
     
-    override final def calculate: IntValue = IntValue.IntCalculate(this)
-    
     final def unary_+ : IntValue = this
     
     final def unary_- : IntValue = IntValue.IntNegate(this)
@@ -77,45 +75,45 @@ abstract class IntValue extends Value with NumericValue {
 object IntValue {
     
     final case object IntNull extends IntValue {
-        override def get: Option[Int] = None
+        override def get(implicit valueContext: ValueContext): Option[Int] = None
     }
     
     final case class IntConstant(value: Int) extends IntValue {
-        override def get: Option[Int] = Some(value)
-    }
-    
-    final case class IntCalculate(value: IntValue) extends IntValue {
-        private val calculated: Option[Int] = value.get
-        
-        override def get: Option[Int] = calculated
+        override def get(implicit valueContext: ValueContext): Option[Int] = Some(value)
     }
     
     final case class IntNegate(value: IntValue) extends IntValue {
-        override def get: Option[Int] = value.get.map(v => -v)
+        override def get(implicit valueContext: ValueContext): Option[Int] = value.get.map(v => -v)
     }
     
     final case class IntAdd(value1: IntValue, value2: IntValue) extends IntValue {
-        override def get: Option[Int] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
+        override def get(implicit valueContext: ValueContext): Option[Int] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
     }
     
     final case class IntSubtract(value1: IntValue, value2: IntValue) extends IntValue {
-        override def get: Option[Int] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
+        override def get(implicit valueContext: ValueContext): Option[Int] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
     }
     
     final case class IntMultiply(value1: IntValue, value2: IntValue) extends IntValue {
-        override def get: Option[Int] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
+        override def get(implicit valueContext: ValueContext): Option[Int] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
     }
     
     final case class IntDivide(value1: IntValue, value2: IntValue) extends IntValue {
-        override def get: Option[Int] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
+        override def get(implicit valueContext: ValueContext): Option[Int] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
     }
     
     final case class IntMod(value1: IntValue, value2: IntValue) extends IntValue {
-        override def get: Option[Int] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 % v2))
+        override def get(implicit valueContext: ValueContext): Option[Int] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 % v2))
     }
     
     final case class NumericToInt(value: NumericValue) extends IntValue {
-        override def get: Option[Int] = value.get.flatMap(Caster.toInt)
+        override def get(implicit valueContext: ValueContext): Option[Int] =
+            value.get.flatMap(Caster.toInt)
     }
     
 }

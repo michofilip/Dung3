@@ -5,8 +5,6 @@ import utils.Caster
 abstract class DoubleValue extends Value with NumericValue {
     override final protected type T = Double
     
-    override final def calculate: DoubleValue = DoubleValue.DoubleCalculate(this)
-    
     final def unary_+ : DoubleValue = this
     
     final def unary_- : DoubleValue = DoubleValue.DoubleNegate(this)
@@ -67,41 +65,40 @@ abstract class DoubleValue extends Value with NumericValue {
 object DoubleValue {
     
     final case object DoubleNull extends DoubleValue {
-        override def get: Option[Double] = None
+        override def get(implicit valueContext: ValueContext): Option[Double] = None
     }
     
     final case class DoubleConstant(value: Double) extends DoubleValue {
-        override def get: Option[Double] = Some(value)
-    }
-    
-    final case class DoubleCalculate(value: DoubleValue) extends DoubleValue {
-        private val calculated: Option[Double] = value.get
-        
-        override def get: Option[Double] = calculated
+        override def get(implicit valueContext: ValueContext): Option[Double] = Some(value)
     }
     
     final case class DoubleNegate(value: DoubleValue) extends DoubleValue {
-        override def get: Option[Double] = value.get.map(v => -v)
+        override def get(implicit valueContext: ValueContext): Option[Double] = value.get.map(v => -v)
     }
     
     final case class DoubleAdd(value1: DoubleValue, value2: DoubleValue) extends DoubleValue {
-        override def get: Option[Double] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
+        override def get(implicit valueContext: ValueContext): Option[Double] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
     }
     
     final case class DoubleSubtract(value1: DoubleValue, value2: DoubleValue) extends DoubleValue {
-        override def get: Option[Double] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
+        override def get(implicit valueContext: ValueContext): Option[Double] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
     }
     
     final case class DoubleMultiply(value1: DoubleValue, value2: DoubleValue) extends DoubleValue {
-        override def get: Option[Double] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
+        override def get(implicit valueContext: ValueContext): Option[Double] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
     }
     
     final case class DoubleDivide(value1: DoubleValue, value2: DoubleValue) extends DoubleValue {
-        override def get: Option[Double] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
+        override def get(implicit valueContext: ValueContext): Option[Double] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
     }
     
     final case class NumericToDouble(value: NumericValue) extends DoubleValue {
-        override def get: Option[Double] = value.get.flatMap(Caster.toDouble)
+        override def get(implicit valueContext: ValueContext): Option[Double] =
+            value.get.flatMap(Caster.toDouble)
     }
     
 }

@@ -5,8 +5,6 @@ import utils.Caster
 abstract class FloatValue extends Value with NumericValue {
     override final protected type T = Float
     
-    override final def calculate: FloatValue = FloatValue.FloatCalculate(this)
-    
     final def unary_+ : FloatValue = this
     
     final def unary_- : FloatValue = FloatValue.FloatNegate(this)
@@ -67,41 +65,40 @@ abstract class FloatValue extends Value with NumericValue {
 object FloatValue {
     
     final case object FloatNull extends FloatValue {
-        override def get: Option[Float] = None
+        override def get(implicit valueContext: ValueContext): Option[Float] = None
     }
     
     final case class FloatConstant(value: Float) extends FloatValue {
-        override def get: Option[Float] = Some(value)
-    }
-    
-    final case class FloatCalculate(value: FloatValue) extends FloatValue {
-        private val calculated: Option[Float] = value.get
-        
-        override def get: Option[Float] = calculated
+        override def get(implicit valueContext: ValueContext): Option[Float] = Some(value)
     }
     
     final case class FloatNegate(value: FloatValue) extends FloatValue {
-        override def get: Option[Float] = value.get.map(v => -v)
+        override def get(implicit valueContext: ValueContext): Option[Float] = value.get.map(v => -v)
     }
     
     final case class FloatAdd(value1: FloatValue, value2: FloatValue) extends FloatValue {
-        override def get: Option[Float] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
+        override def get(implicit valueContext: ValueContext): Option[Float] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
     }
     
     final case class FloatSubtract(value1: FloatValue, value2: FloatValue) extends FloatValue {
-        override def get: Option[Float] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
+        override def get(implicit valueContext: ValueContext): Option[Float] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
     }
     
     final case class FloatMultiply(value1: FloatValue, value2: FloatValue) extends FloatValue {
-        override def get: Option[Float] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
+        override def get(implicit valueContext: ValueContext): Option[Float] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
     }
     
     final case class FloatDivide(value1: FloatValue, value2: FloatValue) extends FloatValue {
-        override def get: Option[Float] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
+        override def get(implicit valueContext: ValueContext): Option[Float] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
     }
     
     final case class NumericToFloat(value: NumericValue) extends FloatValue {
-        override def get: Option[Float] = value.get.flatMap(Caster.toFloat)
+        override def get(implicit valueContext: ValueContext): Option[Float] =
+            value.get.flatMap(Caster.toFloat)
     }
     
 }

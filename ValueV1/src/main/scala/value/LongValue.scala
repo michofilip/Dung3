@@ -5,8 +5,6 @@ import utils.Caster
 abstract class LongValue extends Value with NumericValue {
     override final protected type T = Long
     
-    override final def calculate: LongValue = LongValue.LongCalculate(this)
-    
     final def unary_+ : LongValue = this
     
     final def unary_- : LongValue = LongValue.LongNegate(this)
@@ -76,45 +74,45 @@ abstract class LongValue extends Value with NumericValue {
 object LongValue {
     
     final case object LongNull extends LongValue {
-        override def get: Option[Long] = None
+        override def get(implicit valueContext: ValueContext): Option[Long] = None
     }
     
     final case class LongConstant(value: Long) extends LongValue {
-        override def get: Option[Long] = Some(value)
-    }
-    
-    final case class LongCalculate(value: LongValue) extends LongValue {
-        private val calculated: Option[Long] = value.get
-        
-        override def get: Option[Long] = calculated
+        override def get(implicit valueContext: ValueContext): Option[Long] = Some(value)
     }
     
     final case class LongNegate(value: LongValue) extends LongValue {
-        override def get: Option[Long] = value.get.map(v => -v)
+        override def get(implicit valueContext: ValueContext): Option[Long] = value.get.map(v => -v)
     }
     
     final case class LongAdd(value1: LongValue, value2: LongValue) extends LongValue {
-        override def get: Option[Long] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
+        override def get(implicit valueContext: ValueContext): Option[Long] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))
     }
     
     final case class LongSubtract(value1: LongValue, value2: LongValue) extends LongValue {
-        override def get: Option[Long] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
+        override def get(implicit valueContext: ValueContext): Option[Long] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 - v2))
     }
     
     final case class LongMultiply(value1: LongValue, value2: LongValue) extends LongValue {
-        override def get: Option[Long] = value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
+        override def get(implicit valueContext: ValueContext): Option[Long] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => v1 * v2))
     }
     
     final case class LongDivide(value1: LongValue, value2: LongValue) extends LongValue {
-        override def get: Option[Long] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
+        override def get(implicit valueContext: ValueContext): Option[Long] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 / v2))
     }
     
     final case class LongMod(value1: LongValue, value2: LongValue) extends LongValue {
-        override def get: Option[Long] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 % v2))
+        override def get(implicit valueContext: ValueContext): Option[Long] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => v1 % v2))
     }
     
     final case class NumericToLong(value: NumericValue) extends LongValue {
-        override def get: Option[Long] = value.get.flatMap(Caster.toLong)
+        override def get(implicit valueContext: ValueContext): Option[Long] =
+            value.get.flatMap(Caster.toLong)
     }
     
 }

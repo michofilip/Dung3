@@ -5,8 +5,6 @@ import utils.Caster
 abstract class ByteValue extends Value with NumericValue {
     override final protected type T = Byte
     
-    override final def calculate: ByteValue = ByteValue.ByteCalculate(this)
-    
     final def unary_+ : ByteValue = this
     
     final def unary_- : ByteValue = ByteValue.ByteNegate(this)
@@ -76,45 +74,45 @@ abstract class ByteValue extends Value with NumericValue {
 object ByteValue {
     
     final case object ByteNull extends ByteValue {
-        override def get: Option[Byte] = None
+        override def get(implicit valueContext: ValueContext): Option[Byte] = None
     }
     
     final case class ByteConstant(value: Byte) extends ByteValue {
-        override def get: Option[Byte] = Some(value)
-    }
-    
-    final case class ByteCalculate(value: ByteValue) extends ByteValue {
-        private val calculated: Option[Byte] = value.get
-        
-        override def get: Option[Byte] = calculated
+        override def get(implicit valueContext: ValueContext): Option[Byte] = Some(value)
     }
     
     final case class ByteNegate(value: ByteValue) extends ByteValue {
-        override def get: Option[Byte] = value.get.map(v => (-v).toByte)
+        override def get(implicit valueContext: ValueContext): Option[Byte] = value.get.map(v => (-v).toByte)
     }
     
     final case class ByteAdd(value1: ByteValue, value2: ByteValue) extends ByteValue {
-        override def get: Option[Byte] = value1.get.flatMap(v1 => value2.get.map(v2 => (v1 + v2).toByte))
+        override def get(implicit valueContext: ValueContext): Option[Byte] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => (v1 + v2).toByte))
     }
     
     final case class ByteSubtract(value1: ByteValue, value2: ByteValue) extends ByteValue {
-        override def get: Option[Byte] = value1.get.flatMap(v1 => value2.get.map(v2 => (v1 - v2).toByte))
+        override def get(implicit valueContext: ValueContext): Option[Byte] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => (v1 - v2).toByte))
     }
     
     final case class ByteMultiply(value1: ByteValue, value2: ByteValue) extends ByteValue {
-        override def get: Option[Byte] = value1.get.flatMap(v1 => value2.get.map(v2 => (v1 * v2).toByte))
+        override def get(implicit valueContext: ValueContext): Option[Byte] =
+            value1.get.flatMap(v1 => value2.get.map(v2 => (v1 * v2).toByte))
     }
     
     final case class ByteDivide(value1: ByteValue, value2: ByteValue) extends ByteValue {
-        override def get: Option[Byte] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => (v1 / v2).toByte))
+        override def get(implicit valueContext: ValueContext): Option[Byte] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => (v1 / v2).toByte))
     }
     
     final case class ByteMod(value1: ByteValue, value2: ByteValue) extends ByteValue {
-        override def get: Option[Byte] = value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => (v1 % v2).toByte))
+        override def get(implicit valueContext: ValueContext): Option[Byte] =
+            value1.get.flatMap(v1 => value2.get.filter(_ != 0).map(v2 => (v1 % v2).toByte))
     }
     
     final case class NumericToByte(value: NumericValue) extends ByteValue {
-        override def get: Option[Byte] = value.get.flatMap(Caster.toByte)
+        override def get(implicit valueContext: ValueContext): Option[Byte] =
+            value.get.flatMap(Caster.toByte)
     }
     
 }

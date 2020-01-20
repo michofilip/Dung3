@@ -3,11 +3,9 @@ package value
 abstract class Value {
     protected type T
     
-    def get: Option[T]
+    def get(implicit valueContext: ValueContext): Option[T]
     
-    def getOrElse(default: => T): T = get.getOrElse(default)
-    
-    def calculate: Value
+    def getOrElse(default: => T)(implicit valueContext: ValueContext): T = get.getOrElse(default)
     
     def ===(that: Value): BooleanValue = BooleanValue.Equals(this, that)
     

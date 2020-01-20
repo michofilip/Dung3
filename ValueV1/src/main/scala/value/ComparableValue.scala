@@ -1,7 +1,7 @@
 package value
 
 trait ComparableValue extends Value {
-    protected[value] def compareTo(value: ComparableValue): Option[Int]
+    protected[value] def compareTo(value: ComparableValue)(implicit valueContext: ValueContext): Option[Int]
     
     final def <(that: ComparableValue): BooleanValue = BooleanValue.Less(this, that)
     
