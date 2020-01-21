@@ -1,5 +1,6 @@
 package value
 
+import context.ValueContext
 import utils.Caster
 
 abstract class ByteValue extends Value with NumericValue {

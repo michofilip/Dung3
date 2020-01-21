@@ -1,5 +1,7 @@
 package value
 
+import context.ValueContext
+
 abstract class BooleanValue extends Value {
     override final protected type T = Boolean
     
