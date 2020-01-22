@@ -1,6 +1,6 @@
 package value.basic
 
-import value.basic.comparators.ValueComparator
+import value.basic.utils.ValueComparator
 import value.{Value, ValueContext}
 
 trait ComparableValue[V <: ComparableValue[V]] extends Value {

@@ -1,4 +1,4 @@
-package value.basic.comparators
+package value.basic.utils
 
 import value.basic.{ByteValue, DoubleValue, FloatValue, IntValue, LongValue, ShortValue}
 import value.{Value, ValueContext}

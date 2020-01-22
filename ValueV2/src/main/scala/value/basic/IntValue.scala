@@ -1,7 +1,7 @@
 package value.basic
 
-import utils.Caster
-import value.basic.comparators.ValueComparator
+import commons.utils.Caster
+import value.basic.utils.ValueComparator
 import value.{Value, ValueContext}
 
 abstract class IntValue extends Value with NumericValue with ComparableValue[IntValue] {

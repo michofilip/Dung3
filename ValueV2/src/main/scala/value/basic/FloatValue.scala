@@ -1,6 +1,6 @@
 package value.basic
 
-import utils.Caster
+import commons.utils.Caster
 import value.{Value, ValueContext}
 
 abstract class FloatValue extends Value with NumericValue {
