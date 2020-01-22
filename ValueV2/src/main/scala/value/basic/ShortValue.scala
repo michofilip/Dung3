@@ -1,10 +1,12 @@
 package value.basic
 
 import commons.utils.Caster
+import value.basic.utils.ValueComparator
 import value.{Value, ValueContext}
 
-abstract class ShortValue extends Value with NumericValue {
+abstract class ShortValue extends Value with NumericValue with ComparableValue[ShortValue] {
     override final protected type T = Short
+    override protected val valueComparator: ValueComparator[ShortValue] = ValueComparator.ShortValueComparator
     
     final def unary_+ : ShortValue = this
     
