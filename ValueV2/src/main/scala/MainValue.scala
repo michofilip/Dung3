@@ -1,7 +1,7 @@
 import value.ValueContext
-import value.basic.converters.ValueImplicits._
 import value.basic.DoubleValue.DoubleConstant
 import value.basic.IntValue.IntConstant
+import value.basic.converters.ValueImplicits._
 import value.basic.{DoubleValue, IntValue}
 
 object MainValue extends App {

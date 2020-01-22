@@ -1,16 +1,20 @@
 package value.basic
 
+import value.basic.comparators.ValueComparator
 import value.{Value, ValueContext}
 
-trait ComparableValue extends Value {
-    protected[value] def compareTo(value: ComparableValue)(implicit valueContext: ValueContext): Option[Int]
+trait ComparableValue[V <: ComparableValue[V]] extends Value {
+    protected val valueComparator: ValueComparator[V]
     
-    final def <(that: ComparableValue): BooleanValue = BooleanValue.Less(this, that)
+    def compareTo(that: V)(implicit valueContext: ValueContext): Option[Int] =
+        valueComparator.compare(this.asInstanceOf[V], that)
     
-    final def <=(that: ComparableValue): BooleanValue = BooleanValue.LessEqual(this, that)
+    final def <(that: ComparableValue[V]): BooleanValue = BooleanValue.Less(this, that)
     
-    final def >(that: ComparableValue): BooleanValue = BooleanValue.Greater(this, that)
-    
-    final def >=(that: ComparableValue): BooleanValue = BooleanValue.GreaterEqual(this, that)
+    //    final def <=(that: ComparableValue[V]): BooleanValue = BooleanValue.LessEqual(this, that)
+    //
+    //    final def >(that: ComparableValue[V]): BooleanValue = BooleanValue.Greater(this, that)
+    //
+    //    final def >=(that: ComparableValue[V]): BooleanValue = BooleanValue.GreaterEqual(this, that)
     
 }

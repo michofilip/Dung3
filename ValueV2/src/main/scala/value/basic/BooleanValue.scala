@@ -74,24 +74,24 @@ object BooleanValue {
             value1.get.flatMap(v1 => value2.get.map(v2 => v1 != v2))
     }
     
-    final case class Less(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
+    final case class Less[V <: ComparableValue[V]](value1: ComparableValue[V], value2: ComparableValue[V]) extends BooleanValue {
         override def get(implicit valueContext: ValueContext): Option[Boolean] =
-            value1.compareTo(value2).map(_ < 0)
+            value1.compareTo(value2.asInstanceOf[V]).map(_ < 0)
     }
     
-    final case class LessEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-        override def get(implicit valueContext: ValueContext): Option[Boolean] =
-            value1.compareTo(value2).map(_ <= 0)
-    }
-    
-    final case class Greater(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-        override def get(implicit valueContext: ValueContext): Option[Boolean] =
-            value1.compareTo(value2).map(_ > 0)
-    }
-    
-    final case class GreaterEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-        override def get(implicit valueContext: ValueContext): Option[Boolean] =
-            value1.compareTo(value2).map(_ >= 0)
-    }
+    //    final case class LessEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
+    //        override def get(implicit valueContext: ValueContext): Option[Boolean] =
+    //            value1.compareTo(value2).map(_ <= 0)
+    //    }
+    //
+    //    final case class Greater(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
+    //        override def get(implicit valueContext: ValueContext): Option[Boolean] =
+    //            value1.compareTo(value2).map(_ > 0)
+    //    }
+    //
+    //    final case class GreaterEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
+    //        override def get(implicit valueContext: ValueContext): Option[Boolean] =
+    //            value1.compareTo(value2).map(_ >= 0)
+    //    }
     
 }

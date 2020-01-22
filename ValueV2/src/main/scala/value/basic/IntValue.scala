@@ -1,10 +1,12 @@
 package value.basic
 
 import utils.Caster
+import value.basic.comparators.ValueComparator
 import value.{Value, ValueContext}
 
-abstract class IntValue extends Value with NumericValue with ComparableValue2[IntValue] {
+abstract class IntValue extends Value with NumericValue with ComparableValue[IntValue] {
     override final protected type T = Int
+    override protected val valueComparator: ValueComparator[IntValue] = ValueComparator.IntValueComparator
     
     final def unary_+ : IntValue = this
     
