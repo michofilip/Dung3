@@ -39,3 +39,10 @@ lazy val ValueV1 = project
             commonSettings,
             libraryDependencies ++= Dependencies.valueV1Dependencies
         )
+
+lazy val ValueV2 = project
+        .dependsOn(Commons)
+        .settings(
+            commonSettings,
+            libraryDependencies ++= Dependencies.valueV2Dependencies
+        )

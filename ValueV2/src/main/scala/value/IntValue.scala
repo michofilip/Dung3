@@ -3,7 +3,7 @@ package value
 import context.ValueContext
 import utils.Caster
 
-abstract class IntValue extends Value with NumericValue {
+abstract class IntValue extends Value with NumericValue with ComparableValue2[IntValue] {
     override final protected type T = Int
     
     final def unary_+ : IntValue = this

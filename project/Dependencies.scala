@@ -10,5 +10,6 @@ object Dependencies {
     val entityV2Dependencies: Seq[ModuleID] = commonDependencies
     val entityV3Dependencies: Seq[ModuleID] = commonDependencies
     val valueV1Dependencies: Seq[ModuleID] = commonDependencies
+    val valueV2Dependencies: Seq[ModuleID] = commonDependencies
     val commonsDependencies: Seq[ModuleID] = commonDependencies
 }
