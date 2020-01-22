@@ -4,11 +4,8 @@ import context.ValueContext
 import utils.ValueComparator
 
 trait ComparableValue2[V <: ComparableValue2[V]] extends Value {
-        def compareTo2[V1 <: ComparableValue2[V1]](value: ComparableValue2[V1])
-                                                  (implicit valueComparator: ValueComparator[V, V1],
-                                                   valueContext: ValueContext): Option[Int] = {
-            valueComparator.compare(this.asInstanceOf[V], value.asInstanceOf[V1])
-        }
+    def compareTo(value: V)(implicit valueComparator: ValueComparator[V], valueContext: ValueContext): Option[Int] =
+        valueComparator.compare(this.asInstanceOf[V], value)
     
     //    final def <(that: ComparableValue2): BooleanValue = BooleanValue.Less(this, that)
     //
