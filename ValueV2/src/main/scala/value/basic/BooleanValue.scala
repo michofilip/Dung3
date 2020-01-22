@@ -79,19 +79,19 @@ object BooleanValue {
             value1.compareTo(value2.asInstanceOf[V]).map(_ < 0)
     }
     
-    //    final case class LessEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-    //        override def get(implicit valueContext: ValueContext): Option[Boolean] =
-    //            value1.compareTo(value2).map(_ <= 0)
-    //    }
-    //
-    //    final case class Greater(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-    //        override def get(implicit valueContext: ValueContext): Option[Boolean] =
-    //            value1.compareTo(value2).map(_ > 0)
-    //    }
-    //
-    //    final case class GreaterEqual(value1: ComparableValue, value2: ComparableValue) extends BooleanValue {
-    //        override def get(implicit valueContext: ValueContext): Option[Boolean] =
-    //            value1.compareTo(value2).map(_ >= 0)
-    //    }
+    final case class LessEqual[V <: ComparableValue[V]](value1: ComparableValue[V], value2: ComparableValue[V]) extends BooleanValue {
+        override def get(implicit valueContext: ValueContext): Option[Boolean] =
+            value1.compareTo(value2.asInstanceOf[V]).map(_ <= 0)
+    }
+    
+    final case class Greater[V <: ComparableValue[V]](value1: ComparableValue[V], value2: ComparableValue[V]) extends BooleanValue {
+        override def get(implicit valueContext: ValueContext): Option[Boolean] =
+            value1.compareTo(value2.asInstanceOf[V]).map(_ > 0)
+    }
+    
+    final case class GreaterEqual[V <: ComparableValue[V]](value1: ComparableValue[V], value2: ComparableValue[V]) extends BooleanValue {
+        override def get(implicit valueContext: ValueContext): Option[Boolean] =
+            value1.compareTo(value2.asInstanceOf[V]).map(_ >= 0)
+    }
     
 }

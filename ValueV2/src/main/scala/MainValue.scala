@@ -17,4 +17,5 @@ object MainValue extends App {
     println(v1.compareTo(v2))
     println(v1.compareTo(v3))
     println(v3.compareTo(v1))
+    println((v1 > v2).get)
 }

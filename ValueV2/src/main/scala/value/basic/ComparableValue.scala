@@ -11,10 +11,10 @@ trait ComparableValue[V <: ComparableValue[V]] extends Value {
     
     final def <(that: ComparableValue[V]): BooleanValue = BooleanValue.Less(this, that)
     
-    //    final def <=(that: ComparableValue[V]): BooleanValue = BooleanValue.LessEqual(this, that)
-    //
-    //    final def >(that: ComparableValue[V]): BooleanValue = BooleanValue.Greater(this, that)
-    //
-    //    final def >=(that: ComparableValue[V]): BooleanValue = BooleanValue.GreaterEqual(this, that)
+    final def <=(that: ComparableValue[V]): BooleanValue = BooleanValue.LessEqual(this, that)
+    
+    final def >(that: ComparableValue[V]): BooleanValue = BooleanValue.Greater(this, that)
+    
+    final def >=(that: ComparableValue[V]): BooleanValue = BooleanValue.GreaterEqual(this, that)
     
 }
