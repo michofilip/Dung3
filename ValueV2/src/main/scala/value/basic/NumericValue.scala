@@ -1,7 +1,7 @@
-package value
+package value.basic
 
-import context.ValueContext
 import utils.Comparators
+import value.{Value, ValueContext}
 
 trait NumericValue extends Value with ComparableValue {
     

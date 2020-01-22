@@ -1,7 +1,7 @@
-package value
+package value.basic
 
-import context.ValueContext
 import utils.Caster
+import value.{Value, ValueContext}
 
 abstract class ShortValue extends Value with NumericValue {
     override final protected type T = Short

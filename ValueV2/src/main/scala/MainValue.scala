@@ -1,8 +1,8 @@
-import context.ValueContext
-import value.DoubleValue.DoubleConstant
-import value.IntValue.IntConstant
-import value.ValueImports._
-import value.{DoubleValue, IntValue}
+import value.ValueContext
+import value.basic.converters.ValueImplicits._
+import value.basic.DoubleValue.DoubleConstant
+import value.basic.IntValue.IntConstant
+import value.basic.{DoubleValue, IntValue}
 
 object MainValue extends App {
     implicit val vc: ValueContext = new ValueContext {}

@@ -1,7 +1,7 @@
-package value
+package value.basic
 
-import context.ValueContext
-import utils.ValueComparator
+import value.basic.comparators.ValueComparator
+import value.{Value, ValueContext}
 
 trait ComparableValue2[V <: ComparableValue2[V]] extends Value {
     def compareTo(value: V)(implicit valueComparator: ValueComparator[V], valueContext: ValueContext): Option[Int] =

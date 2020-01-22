@@ -1,6 +1,6 @@
-package value
+package value.basic
 
-import context.ValueContext
+import value.{Value, ValueContext}
 
 case object NullValue extends Value {
     override protected type T = Any

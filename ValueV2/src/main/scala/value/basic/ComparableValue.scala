@@ -1,6 +1,6 @@
-package value
+package value.basic
 
-import context.ValueContext
+import value.{Value, ValueContext}
 
 trait ComparableValue extends Value {
     protected[value] def compareTo(value: ComparableValue)(implicit valueContext: ValueContext): Option[Int]

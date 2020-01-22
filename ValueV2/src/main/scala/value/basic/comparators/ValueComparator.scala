@@ -1,7 +1,7 @@
-package utils
+package value.basic.comparators
 
-import context.ValueContext
-import value.{ByteValue, DoubleValue, FloatValue, IntValue, LongValue, ShortValue, Value}
+import value.basic.{ByteValue, DoubleValue, FloatValue, IntValue, LongValue, ShortValue}
+import value.{Value, ValueContext}
 
 abstract class ValueComparator[V <: Value] {
     def compare(value1: V, value2: V)(implicit valueContext: ValueContext): Option[Int]

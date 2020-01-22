@@ -1,7 +1,7 @@
-package value
+package value.basic
 
-import context.ValueContext
-import value.StringValue.CharToString
+import value.basic.StringValue.CharToString
+import value.{Value, ValueContext}
 
 abstract class StringValue extends Value {
     override final protected type T = String
@@ -22,6 +22,7 @@ object StringValue {
     final case class StringConstant(value: String) extends StringValue {
         override def get(implicit valueContext: ValueContext): Option[String] = Some(value)
     }
+    
     final case class Concatenate(value1: StringValue, value2: StringValue) extends StringValue {
         override def get(implicit valueContext: ValueContext): Option[String] =
             value1.get.flatMap(v1 => value2.get.map(v2 => v1 + v2))

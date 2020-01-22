@@ -1,6 +1,6 @@
 package value
 
-import context.ValueContext
+import value.basic.BooleanValue
 
 abstract class Value {
     protected type T

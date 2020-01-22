@@ -1,8 +1,10 @@
-package value
+package value.basic.converters
+
+import value.basic.{BooleanValue, ByteValue, CharValue, DoubleValue, FloatValue, IntValue, LongValue, NullValue, NumericValue, ShortValue, StringValue}
 
 import scala.language.implicitConversions
 
-object ValueImports {
+object ValueImplicits {
     // null converters
     implicit def null2BooleanValue(v: NullValue.type): BooleanValue = BooleanValue.BooleanNull
     

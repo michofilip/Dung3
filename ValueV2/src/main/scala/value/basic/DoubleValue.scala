@@ -1,7 +1,7 @@
-package value
+package value.basic
 
-import context.ValueContext
 import utils.Caster
+import value.{Value, ValueContext}
 
 abstract class DoubleValue extends Value with NumericValue with ComparableValue2[DoubleValue] {
     override final protected type T = Double
