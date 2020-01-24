@@ -4,6 +4,8 @@ case class Timestamp(time: Long) {
     def +(duration: Duration): Timestamp = Timestamp(time + duration.time)
     
     def -(duration: Duration): Timestamp = Timestamp(time - duration.time)
+    
+    def -(timestamp: Timestamp): Duration = Duration.difference(this, timestamp)
 }
 
 object Timestamp {
