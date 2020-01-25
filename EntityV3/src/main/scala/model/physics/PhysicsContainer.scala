@@ -1,11 +1,13 @@
 package model.physics
 
-import commons.temporal.Timestamp
-import model.state.StateHolder
+import entity.Entity
 
 case class PhysicsContainer(physics: Physics, physicsSelector: PhysicsSelector) {
-    def select(stateHolderOpt: Option[StateHolder], timestamp: Timestamp): PhysicsContainer =
-        physicsSelector.select(stateHolderOpt.map(_.state))
+    def select(entity: Entity): PhysicsContainer = {
+        val stateOpt = entity.stateContainerOpt.map(_.state)
+        
+        physicsSelector.select(stateOpt)
                 .map(physics => PhysicsContainer(physics, physicsSelector))
                 .getOrElse(this)
+    }
 }

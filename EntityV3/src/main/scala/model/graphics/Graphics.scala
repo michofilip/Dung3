@@ -1,14 +1,20 @@
 package model.graphics
 
 import commons.temporal.Timestamp
-import model.position.Position
-import model.state.StateHolder
+import entity.Entity
 
 case class Graphics(animation: Animation, animationSelector: AnimationSelector, animationTimestamp: Timestamp) {
-    def select(stateHolderOpt: Option[StateHolder], positionOpt: Option[Position], timestamp: Timestamp): Graphics =
-        animationSelector.select(stateHolderOpt.map(_.state), positionOpt.map(_.direction))
-                .map(animation => Graphics(animation, animationSelector, timestamp))
+    def select(entity: Entity): Graphics = {
+        val stateOpt = entity.stateContainerOpt.map(_.state)
+        val directionOpt = entity.positionOpt.map(_.direction)
+        val newAnimationTimestamp = entity.stateContainerOpt
+                .map(_.stateTimestamp)
+                .getOrElse(entity.initialTimestamp)
+        
+        animationSelector.select(stateOpt, directionOpt)
+                .map(animation => Graphics(animation, animationSelector, newAnimationTimestamp))
                 .getOrElse(this)
+    }
     
     def getFrame(timestamp: Timestamp): Frame =
         animation.frame(timestamp - animationTimestamp)
