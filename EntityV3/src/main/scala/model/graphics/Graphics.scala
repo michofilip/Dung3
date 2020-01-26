@@ -4,18 +4,20 @@ import commons.temporal.Timestamp
 import entity.Entity
 
 case class Graphics(animation: Animation, animationSelector: AnimationSelector, animationTimestamp: Timestamp) {
-    def select(entity: Entity): Graphics = {
+    def getFrame(timestamp: Timestamp): Frame =
+        animation.frame(timestamp - animationTimestamp)
+}
+
+object Graphics {
+    def selectGraphics(entity: Entity)(graphics: Graphics): Graphics = {
         val stateOpt = entity.stateContainerOpt.map(_.state)
         val directionOpt = entity.positionOpt.map(_.direction)
-        val newAnimationTimestamp = entity.stateContainerOpt
+        val animationTimestamp = entity.stateContainerOpt
                 .map(_.stateTimestamp)
                 .getOrElse(entity.initialTimestamp)
         
-        animationSelector.select(stateOpt, directionOpt)
-                .map(animation => Graphics(animation, animationSelector, newAnimationTimestamp))
-                .getOrElse(this)
+        graphics.animationSelector.select(stateOpt, directionOpt)
+                .map(animation => Graphics(animation, graphics.animationSelector, animationTimestamp))
+                .getOrElse(graphics)
     }
-    
-    def getFrame(timestamp: Timestamp): Frame =
-        animation.frame(timestamp - animationTimestamp)
 }

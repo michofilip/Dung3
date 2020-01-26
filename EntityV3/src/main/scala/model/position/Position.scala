@@ -2,25 +2,39 @@ package model.position
 
 import commons.temporal.Timestamp
 
-case class Position(coordinates: Coordinates, direction: Direction, positionTimestamp: Timestamp) {
-    def moveTo(x: Int, y: Int, positionTimestamp: Timestamp): Position =
-        copy(coordinates = Coordinates(x, y), positionTimestamp = positionTimestamp)
+case class Position(coordinates: Coordinates, direction: Direction, positionTimestamp: Timestamp)
+
+object Position {
+    def update(positionMapper: (Coordinates, Direction) => (Coordinates, Direction), positionTimestamp: Timestamp)
+              (position: Position): Position = {
+        val (coordinates, direction) = positionMapper(position.coordinates, position.direction)
+        if (coordinates != position.coordinates || direction != position.direction)
+            Position(coordinates, direction, positionTimestamp)
+        else
+            position
+    }
     
-    def moveBy(dx: Int, dy: Int, positionTimestamp: Timestamp): Position =
-        copy(coordinates = coordinates.shift(dx, dy), positionTimestamp = positionTimestamp)
+    def moveTo(x: Int, y: Int): (Coordinates, Direction) => (Coordinates, Direction) =
+        (_, direction) => (Coordinates(x, y), direction)
     
-    def rotateRight45(positionTimestamp: Timestamp): Position =
-        copy(direction = direction.right)
+    def moveBy(dx: Int, dy: Int): (Coordinates, Direction) => (Coordinates, Direction) =
+        (coordinates, direction) => (coordinates.shift(dx, dy), direction)
     
-    def rotateRight90(positionTimestamp: Timestamp): Position =
-        copy(direction = direction.right.right)
+    def rotateTo(direction: Direction): (Coordinates, Direction) => (Coordinates, Direction) =
+        (coordinates, _) => (coordinates, direction)
     
-    def rotateLeft45(positionTimestamp: Timestamp): Position =
-        copy(direction = direction.left)
+    def rotateRight45(): (Coordinates, Direction) => (Coordinates, Direction) =
+        (coordinates, direction) => (coordinates, direction.right)
     
-    def rotateLeft90(positionTimestamp: Timestamp): Position =
-        copy(direction = direction.left.left)
+    def rotateRight90(): (Coordinates, Direction) => (Coordinates, Direction) =
+        (coordinates, direction) => (coordinates, direction.right.right)
     
-    def rotate180(positionTimestamp: Timestamp): Position =
-        copy(direction = direction.opposite)
+    def rotateLeft45(): (Coordinates, Direction) => (Coordinates, Direction) =
+        (coordinates, direction) => (coordinates, direction.left)
+    
+    def rotateLeft90(): (Coordinates, Direction) => (Coordinates, Direction) =
+        (coordinates, direction) => (coordinates, direction.left.left)
+    
+    def rotate180(): (Coordinates, Direction) => (Coordinates, Direction) =
+        (coordinates, direction) => (coordinates, direction.opposite)
 }

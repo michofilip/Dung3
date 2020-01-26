@@ -2,12 +2,14 @@ package model.physics
 
 import entity.Entity
 
-case class PhysicsContainer(physics: Physics, physicsSelector: PhysicsSelector) {
-    def select(entity: Entity): PhysicsContainer = {
+case class PhysicsContainer(physics: Physics, physicsSelector: PhysicsSelector)
+
+object PhysicsContainer {
+    def selectPhysics(entity: Entity)(physicsContainer: PhysicsContainer): PhysicsContainer = {
         val stateOpt = entity.stateContainerOpt.map(_.state)
         
-        physicsSelector.select(stateOpt)
-                .map(physics => PhysicsContainer(physics, physicsSelector))
-                .getOrElse(this)
+        physicsContainer.physicsSelector.select(stateOpt)
+                .map(physics => PhysicsContainer(physics, physicsContainer.physicsSelector))
+                .getOrElse(physicsContainer)
     }
 }

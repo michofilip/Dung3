@@ -8,9 +8,9 @@ import model.state.{State, StateContainer}
 
 case class Entity(id: Long, name: String, initialTimestamp: Timestamp,
                   stateContainerOpt: Option[StateContainer] = None,
-                  positionOpt: Option[Position],
-                  physicsContainerOpt: Option[PhysicsContainer],
-                  graphicsOpt: Option[Graphics]
+                  positionOpt: Option[Position] = None,
+                  physicsContainerOpt: Option[PhysicsContainer] = None,
+                  graphicsOpt: Option[Graphics] = None
                  ) {
     def setState(stateContainer: StateContainer): Entity = copy(stateContainerOpt = Some(stateContainer))
     
@@ -32,34 +32,26 @@ case class Entity(id: Long, name: String, initialTimestamp: Timestamp,
     
     def updateState(stateMapper: State => State, timestamp: Timestamp): Entity =
         stateContainerOpt
-                .map(_.updateState(stateMapper, timestamp))
+                .map(StateContainer.update(stateMapper, timestamp))
                 .map(setState)
                 .getOrElse(this)
     
-    //todo fix it
-    def updateCoordinates(coordinatesMapper: Coordinates => Coordinates, timestamp: Timestamp): Entity =
+    def updatePosition(positionMapper: (Coordinates, Direction) => (Coordinates, Direction), timestamp: Timestamp): Entity =
         positionOpt
-                .map(position => Position(coordinatesMapper(position.coordinates), position.direction, timestamp))
-                .map(setPosition)
-                .getOrElse(this)
-    
-    //todo fix it
-    def updateDirection(directionMapper: Direction => Direction, timestamp: Timestamp): Entity =
-        positionOpt
-                .map(position => Position(position.coordinates, directionMapper(position.direction), timestamp))
+                .map(Position.update(positionMapper, timestamp))
                 .map(setPosition)
                 .getOrElse(this)
     
     
     def selectPhysics(): Entity =
         physicsContainerOpt
-                .map(_.select(this))
+                .map(PhysicsContainer.selectPhysics(this))
                 .map(setPhysicsContainer)
                 .getOrElse(this)
     
     def selectAnimation(): Entity =
         graphicsOpt
-                .map(_.select(this))
+                .map(Graphics.selectGraphics(this))
                 .map(setGraphics)
                 .getOrElse(this)
     
