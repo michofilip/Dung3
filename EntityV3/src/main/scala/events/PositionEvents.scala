@@ -1,7 +1,7 @@
 package events
 
 import entity.Entity
-import events.EventImplicits._
+import events.Event._
 import model.position.Position
 import world.WorldFrameContext
 
