@@ -3,12 +3,13 @@ package entity
 import commons.temporal.Timestamp
 import model.graphics.Graphics
 import model.physics.PhysicsContainer
-import model.position.{Coordinates, Direction, Position}
+import model.position.Position.PositionMapper
+import model.position.PositionContainer
 import model.state.{State, StateContainer}
 
 case class Entity(id: Long, name: String, initialTimestamp: Timestamp,
                   stateContainerOpt: Option[StateContainer] = None,
-                  positionOpt: Option[Position] = None,
+                  positionContainerOpt: Option[PositionContainer] = None,
                   physicsContainerOpt: Option[PhysicsContainer] = None,
                   graphicsOpt: Option[Graphics] = None
                  )
@@ -28,14 +29,14 @@ object Entity {
     }
     
     implicit class PositionService(entity: Entity) {
-        def setPosition(position: Position): Entity = entity.copy(positionOpt = Some(position))
+        def setPositionContainer(position: PositionContainer): Entity = entity.copy(positionContainerOpt = Some(position))
         
-        def removePosition(): Entity = entity.copy(positionOpt = None)
+        def removePositionContainer(): Entity = entity.copy(positionContainerOpt = None)
         
-        def updatePosition(positionMapper: (Coordinates, Direction) => (Coordinates, Direction), timestamp: Timestamp): Entity =
-            entity.positionOpt
-                    .map(Position.update(positionMapper, timestamp))
-                    .map(setPosition)
+        def updatePositionContainer(positionMapper: PositionMapper, timestamp: Timestamp): Entity =
+            entity.positionContainerOpt
+                    .map(PositionContainer.update(positionMapper, timestamp))
+                    .map(setPositionContainer)
                     .getOrElse(entity)
     }
     

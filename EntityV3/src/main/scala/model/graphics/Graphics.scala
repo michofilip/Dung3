@@ -11,7 +11,7 @@ case class Graphics(animation: Animation, animationSelector: AnimationSelector, 
 object Graphics {
     def selectGraphics(entity: Entity)(graphics: Graphics): Graphics = {
         val stateOpt = entity.stateContainerOpt.map(_.state)
-        val directionOpt = entity.positionOpt.map(_.direction)
+        val directionOpt = entity.positionContainerOpt.map(_.position.direction)
         val animationTimestamp = entity.stateContainerOpt
                 .map(_.stateTimestamp)
                 .getOrElse(entity.initialTimestamp)

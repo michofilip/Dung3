@@ -9,7 +9,7 @@ class EntityRepository private(private val entitiesById: Map[Long, Entity],
     def +(entity: Entity): EntityRepository = {
         val newEntitiesById = entitiesById + (entity.id -> entity)
         
-        val newEntitiesByCoordinates = entity.positionOpt.map(_.coordinates).map(coordinates => {
+        val newEntitiesByCoordinates = entity.positionContainerOpt.map(_.position.coordinates).map(coordinates => {
             val newEntitiesAtCoordinates = entitiesByCoordinates.getOrElse(coordinates, Map.empty) + (entity.id -> entity)
             entitiesByCoordinates + (coordinates -> newEntitiesAtCoordinates)
         }).getOrElse(entitiesByCoordinates)
@@ -23,7 +23,7 @@ class EntityRepository private(private val entitiesById: Map[Long, Entity],
     def -(entity: Entity): EntityRepository = {
         val newEntitiesById = entitiesById - entity.id
         
-        val newEntitiesByCoordinates = entity.positionOpt.map(_.coordinates).map(coordinates => {
+        val newEntitiesByCoordinates = entity.positionContainerOpt.map(_.position.coordinates).map(coordinates => {
             val newEntitiesAtCoordinates = entitiesByCoordinates.getOrElse(coordinates, Map.empty) - entity.id
             if (newEntitiesAtCoordinates.isEmpty) entitiesByCoordinates - coordinates
             else entitiesByCoordinates + (coordinates -> newEntitiesAtCoordinates)
