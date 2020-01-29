@@ -3,8 +3,8 @@ package entity
 import commons.temporal.Timestamp
 import model.graphics.Graphics
 import model.physics.PhysicsContainer
-import model.position.Position.PositionMapper
 import model.position.PositionContainer
+import model.position.PositionMappers.PositionMapper
 import model.state.{State, StateContainer}
 
 case class Entity(id: Long, name: String, initialTimestamp: Timestamp,
