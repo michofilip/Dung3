@@ -3,12 +3,6 @@ package model.position
 object PositionMappers {
     type PositionMapper = Position => Position
     
-    implicit class PositionMapperComposer(positionMapper1: PositionMapper) {
-        def -->(positionMapper2: PositionMapper): PositionMapper = position => {
-            positionMapper2(positionMapper1(position))
-        }
-    }
-    
     def moveTo(x: Int, y: Int): PositionMapper = {
         case Position(_, direction) => Position(Coordinates(x, y), direction)
     }

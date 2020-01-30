@@ -1,8 +1,8 @@
 package events
 
+import commons.utils.FunctionUtils._
 import entity.Entity
 import events.Event._
-import model.position.PositionMappers._
 import model.position.{Direction, PositionMappers}
 import model.state.State
 import world.WorldFrameContext
