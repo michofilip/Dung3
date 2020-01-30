@@ -11,14 +11,14 @@ object PositionEvents {
     
     final case class MoveTo(override val entityId: Long, x: Int, y: Int) extends Event {
         override def applyTo(entity: Entity)(implicit wfc: WorldFrameContext): (Vector[Entity], Vector[Event]) = {
-            val newEntity = entity.updatePositionContainer(PositionMappers.moveTo(x, y), wfc.timestamp)
+            val newEntity = entity.updatePosition(PositionMappers.moveTo(x, y), wfc.timestamp)
             (newEntity, Vector.empty)
         }
     }
     
     final case class MoveBy(override val entityId: Long, dx: Int, dy: Int) extends Event {
         override def applyTo(entity: Entity)(implicit wfc: WorldFrameContext): (Vector[Entity], Vector[Event]) = {
-            val newEntity = entity.updatePositionContainer(PositionMappers.moveBy(dx, dy), wfc.timestamp)
+            val newEntity = entity.updatePosition(PositionMappers.moveBy(dx, dy), wfc.timestamp)
             (newEntity, Vector.empty)
         }
     }
@@ -28,7 +28,7 @@ object PositionEvents {
             val positionMapper = PositionMappers.step(direction) --> PositionMappers.rotateTo(direction)
             
             val newEntity = entity
-                    .updatePositionContainer(positionMapper, wfc.timestamp)
+                    .updatePosition(positionMapper, wfc.timestamp)
                     .updateState(StateMappers.movement, wfc.timestamp)
             (newEntity, Vector.empty)
         }

@@ -5,7 +5,7 @@ import entity.Entity
 case class PhysicsContainer(physics: Physics, physicsSelector: PhysicsSelector)
 
 object PhysicsContainer {
-    def selectPhysics(entity: Entity)(physicsContainer: PhysicsContainer): PhysicsContainer = {
+    def updatePhysics(entity: Entity)(physicsContainer: PhysicsContainer): PhysicsContainer = {
         val stateOpt = entity.stateContainerOpt.map(_.state)
         
         physicsContainer.physicsSelector.select(stateOpt)

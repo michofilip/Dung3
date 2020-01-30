@@ -8,7 +8,7 @@ object MainV3 extends App {
     val position = PositionContainer(Position(Coordinates(10, 20), Direction.North), initialTimestamp)
     val entity = Entity(id = 1, name = "Test entity", initialTimestamp = Timestamp.now, positionContainerOpt = Some(position))
     
-    val entity2 = entity.updatePositionContainer(PositionMappers.moveBy(5, -5), Timestamp.now)
+    val entity2 = entity.updatePosition(PositionMappers.moveBy(5, -5), Timestamp.now)
     
     println(entity)
     println(entity2)

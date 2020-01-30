@@ -1,7 +1,7 @@
 package entity
 
 import commons.temporal.Timestamp
-import model.graphics.Graphics
+import model.graphics.AnimationContainer
 import model.physics.PhysicsContainer
 import model.position.PositionContainer
 import model.position.PositionMappers.PositionMapper
@@ -12,20 +12,20 @@ case class Entity(id: Long, name: String, initialTimestamp: Timestamp,
                   stateContainerOpt: Option[StateContainer] = None,
                   positionContainerOpt: Option[PositionContainer] = None,
                   physicsContainerOpt: Option[PhysicsContainer] = None,
-                  graphicsOpt: Option[Graphics] = None
+                  animationContainerOpt: Option[AnimationContainer] = None
                  )
 
 object Entity {
     
     implicit class StateService(entity: Entity) {
-        def setState(stateContainer: StateContainer): Entity = entity.copy(stateContainerOpt = Some(stateContainer))
+        def setStateContainer(stateContainer: StateContainer): Entity = entity.copy(stateContainerOpt = Some(stateContainer))
         
-        def removeState(): Entity = entity.copy(stateContainerOpt = None)
+        def removeStateContainer(): Entity = entity.copy(stateContainerOpt = None)
         
         def updateState(stateMapper: StateMapper, timestamp: Timestamp): Entity =
             entity.stateContainerOpt
                     .map(StateContainer.update(stateMapper, timestamp))
-                    .map(setState)
+                    .map(setStateContainer)
                     .getOrElse(entity)
     }
     
@@ -34,7 +34,7 @@ object Entity {
         
         def removePositionContainer(): Entity = entity.copy(positionContainerOpt = None)
         
-        def updatePositionContainer(positionMapper: PositionMapper, timestamp: Timestamp): Entity =
+        def updatePosition(positionMapper: PositionMapper, timestamp: Timestamp): Entity =
             entity.positionContainerOpt
                     .map(PositionContainer.update(positionMapper, timestamp))
                     .map(setPositionContainer)
@@ -46,22 +46,22 @@ object Entity {
         
         def removePhysicsContainer(): Entity = entity.copy(physicsContainerOpt = None)
         
-        def selectPhysics(): Entity =
+        def updatePhysics(): Entity =
             entity.physicsContainerOpt
-                    .map(PhysicsContainer.selectPhysics(entity))
+                    .map(PhysicsContainer.updatePhysics(entity))
                     .map(setPhysicsContainer)
                     .getOrElse(entity)
     }
     
-    implicit class GraphicsService(entity: Entity) {
-        def setGraphics(graphics: Graphics): Entity = entity.copy(graphicsOpt = Some(graphics))
+    implicit class AnimationService(entity: Entity) {
+        def setAnimationContainer(graphics: AnimationContainer): Entity = entity.copy(animationContainerOpt = Some(graphics))
         
-        def removeGraphics(): Entity = entity.copy(graphicsOpt = None)
+        def removeAnimationContainer(): Entity = entity.copy(animationContainerOpt = None)
         
-        def selectAnimation(): Entity =
-            entity.graphicsOpt
-                    .map(Graphics.selectGraphics(entity))
-                    .map(setGraphics)
+        def updateAnimation(): Entity =
+            entity.animationContainerOpt
+                    .map(AnimationContainer.selectGraphics(entity))
+                    .map(setAnimationContainer)
                     .getOrElse(entity)
     }
     
