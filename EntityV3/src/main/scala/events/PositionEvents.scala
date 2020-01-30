@@ -4,7 +4,7 @@ import commons.utils.FunctionUtils._
 import entity.Entity
 import events.Event._
 import model.position.{Direction, PositionMappers}
-import model.state.State
+import model.state.StateMappers
 import world.WorldFrameContext
 
 object PositionEvents {
@@ -29,7 +29,7 @@ object PositionEvents {
             
             val newEntity = entity
                     .updatePositionContainer(positionMapper, wfc.timestamp)
-                    .updateState(State.movement, wfc.timestamp)
+                    .updateState(StateMappers.movement, wfc.timestamp)
             (newEntity, Vector.empty)
         }
     }

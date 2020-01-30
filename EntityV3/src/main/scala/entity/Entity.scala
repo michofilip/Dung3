@@ -5,7 +5,8 @@ import model.graphics.Graphics
 import model.physics.PhysicsContainer
 import model.position.PositionContainer
 import model.position.PositionMappers.PositionMapper
-import model.state.{State, StateContainer}
+import model.state.StateContainer
+import model.state.StateMappers.StateMapper
 
 case class Entity(id: Long, name: String, initialTimestamp: Timestamp,
                   stateContainerOpt: Option[StateContainer] = None,
@@ -21,7 +22,7 @@ object Entity {
         
         def removeState(): Entity = entity.copy(stateContainerOpt = None)
         
-        def updateState(stateMapper: State => State, timestamp: Timestamp): Entity =
+        def updateState(stateMapper: StateMapper, timestamp: Timestamp): Entity =
             entity.stateContainerOpt
                     .map(StateContainer.update(stateMapper, timestamp))
                     .map(setState)

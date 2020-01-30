@@ -11,17 +11,16 @@ object PositionMappers {
         case Position(coordinates, direction) => Position(coordinates.shift(dx, dy), direction)
     }
     
-    def step(direction: Direction): PositionMapper =
-        direction match {
-            case Direction.North => moveBy(0, -1)
-            case Direction.NorthEast => moveBy(1, -1)
-            case Direction.East => moveBy(1, 0)
-            case Direction.SouthEast => moveBy(1, 1)
-            case Direction.South => moveBy(0, 1)
-            case Direction.SouthWest => moveBy(-1, 1)
-            case Direction.West => moveBy(-1, 0)
-            case Direction.NorthWest => moveBy(-1, -1)
-        }
+    def step(direction: Direction): PositionMapper = direction match {
+        case Direction.North => moveBy(0, -1)
+        case Direction.NorthEast => moveBy(1, -1)
+        case Direction.East => moveBy(1, 0)
+        case Direction.SouthEast => moveBy(1, 1)
+        case Direction.South => moveBy(0, 1)
+        case Direction.SouthWest => moveBy(-1, 1)
+        case Direction.West => moveBy(-1, 0)
+        case Direction.NorthWest => moveBy(-1, -1)
+    }
     
     def rotateTo(direction: Direction): PositionMapper = {
         case Position(coordinates, _) => Position(coordinates, direction)
