@@ -52,6 +52,7 @@ class EntityRepository private(private val entitiesById: Map[Long, Entity],
     def forallAtCoordinates(coordinates: Coordinates, condition: Entity => Boolean): Boolean =
         getByCoordinates(coordinates).forall(condition)
     
+    override def toString: String = entitiesById.values.mkString("EntityRepository(", ",", ")")
 }
 
 object EntityRepository {
