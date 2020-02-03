@@ -1,4 +1,4 @@
-name := "Dung2Experimental"
+name := "Dung3"
 
 lazy val commonSettings = Seq(
     //    organization := "com.example",
