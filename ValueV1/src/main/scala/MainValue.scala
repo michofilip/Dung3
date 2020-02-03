@@ -1,4 +1,0 @@
-
-
-object MainValue extends App {
-}
