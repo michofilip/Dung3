@@ -1,6 +1,6 @@
 package commons.utils
 
-object Caster {
+object Casters {
     def toByte(value: AnyVal): Option[Byte] = value match {
         case v: Byte => Some(v.toByte)
         case v: Short => Some(v.toByte)
