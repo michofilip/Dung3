@@ -9,7 +9,7 @@ case class Timer(initialTimestamp: Timestamp, isRunning: Boolean) {
     
     def getTimestamp: Timestamp =
         if (isRunning)
-            initialTimestamp + Duration.difference(creationTimestamp, Timestamp.now)
+            initialTimestamp + (Timestamp.now - creationTimestamp)
         else
             initialTimestamp
 }

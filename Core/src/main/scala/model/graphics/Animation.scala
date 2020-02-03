@@ -1,7 +1,7 @@
 package model.graphics
 
 import commons.temporal.Duration
-import commons.utils.MathUtils.{bound, floor, mod}
+import commons.utils.MathUtils.{MathUtilsImplicits, floor}
 
 sealed abstract class Animation {
     val length: Int
@@ -10,6 +10,9 @@ sealed abstract class Animation {
 }
 
 object Animation {
+    
+    private def frameNo(duration: Duration, fps: Double): Int =
+        floor(duration.time * fps / 1000)
     
     final case class SingleFrameAnimation(frame: Frame) extends Animation {
         override val length: Int = 1
@@ -21,8 +24,7 @@ object Animation {
         override val length: Int = frames.length
         
         override def frame(duration: Duration): Frame = {
-            val frameNo = floor(duration.time * fps / 1000)
-            val frameIndex = bound(frameNo, 0, length - 1)
+            val frameIndex = 0 <| frameNo(duration, fps) |> (length - 1)
             frames(frameIndex)
         }
     }
@@ -31,8 +33,7 @@ object Animation {
         override val length: Int = frames.length
         
         override def frame(duration: Duration): Frame = {
-            val frameNo = floor(duration.time * fps / 1000)
-            val frameIndex = mod(frameNo, length)
+            val frameIndex = frameNo(duration, fps) %% length
             frames(frameIndex)
         }
     }
