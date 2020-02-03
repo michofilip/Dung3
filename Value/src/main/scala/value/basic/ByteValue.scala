@@ -1,6 +1,6 @@
 package value.basic
 
-import commons.utils.Caster
+import commons.utils.Casters
 import value.basic.utils.ValueComparator
 import value.{Value, ValueContext}
 
@@ -115,7 +115,7 @@ object ByteValue {
     
     final case class NumericToByte(value: NumericValue) extends ByteValue {
         override def get(implicit valueContext: ValueContext): Option[Byte] =
-            value.get.flatMap(Caster.toByte)
+            value.get.flatMap(Casters.toByte)
     }
     
 }

@@ -1,6 +1,6 @@
 package value.basic
 
-import commons.utils.Caster
+import commons.utils.Casters
 import value.basic.utils.ValueComparator
 import value.{Value, ValueContext}
 
@@ -101,7 +101,7 @@ object DoubleValue {
     
     final case class NumericToDouble(value: NumericValue) extends DoubleValue {
         override def get(implicit valueContext: ValueContext): Option[Double] =
-            value.get.flatMap(Caster.toDouble)
+            value.get.flatMap(Casters.toDouble)
     }
     
 }

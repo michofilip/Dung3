@@ -1,6 +1,6 @@
 package value.basic
 
-import commons.utils.Caster
+import commons.utils.Casters
 import value.basic.utils.ValueComparator
 import value.{Value, ValueContext}
 
@@ -115,7 +115,7 @@ object ShortValue {
     
     final case class NumericToShort(value: NumericValue) extends ShortValue {
         override def get(implicit valueContext: ValueContext): Option[Short] =
-            value.get.flatMap(Caster.toShort)
+            value.get.flatMap(Casters.toShort)
     }
     
 }
