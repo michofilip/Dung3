@@ -25,7 +25,8 @@ object PositionEvents {
     
     final case class Step(override val entityId: Long, direction: Direction) extends Event {
         override def applyTo(entity: Entity)(implicit wfc: WorldFrameContext): (Vector[Entity], Vector[Event]) = {
-            val positionMapper = PositionMappers.step(direction) --> PositionMappers.rotateTo(direction)
+            import PositionMappers._
+            val positionMapper = step(direction) --> rotateTo(direction)
             
             val newEntity = entity
                     .updatePosition(positionMapper, wfc.timestamp)
