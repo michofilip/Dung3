@@ -67,11 +67,11 @@ class CastersTest extends AnyFunSuite {
     }
     
     test("Casters.toString of AnyVal should be Option[String]") {
-        assertResult(Casters.toString(byteValue))(Some(integerStringValue))
-        assertResult(Casters.toString(shortValue))(Some(integerStringValue))
-        assertResult(Casters.toString(intValue))(Some(integerStringValue))
-        assertResult(Casters.toString(longValue))(Some(integerStringValue))
-        assertResult(Casters.toString(floatValue))(Some(decimalStringValue))
-        assertResult(Casters.toString(doubleValue))(Some(decimalStringValue))
+        assertResult(Some(integerStringValue))(Casters.toString(byteValue))
+        assertResult(Some(integerStringValue))(Casters.toString(shortValue))
+        assertResult(Some(integerStringValue))(Casters.toString(intValue))
+        assertResult(Some(integerStringValue))(Casters.toString(longValue))
+        assertResult(Some(decimalStringValue))(Casters.toString(floatValue))
+        assertResult(Some(decimalStringValue))(Casters.toString(doubleValue))
     }
 }
