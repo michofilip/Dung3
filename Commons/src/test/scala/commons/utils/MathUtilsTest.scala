@@ -33,22 +33,22 @@ class MathUtilsTest extends AnyFunSuite {
     }
     
     test("0 bound by (1, 3) should be 1") {
-        assertResult(1)(ceil(1 <| 0 |> 3))
+        assertResult(1)(1 <| 0 |> 3)
     }
     
     test("1 bound by (1, 3) should be 1") {
-        assertResult(1)(ceil(1 <| 1 |> 3))
+        assertResult(1)(1 <| 1 |> 3)
     }
     
     test("2 bound by (1, 3) should be 2") {
-        assertResult(2)(ceil(1 <| 2 |> 3))
+        assertResult(2)(1 <| 2 |> 3)
     }
     
     test("3 bound by (1, 3) should be 3") {
-        assertResult(3)(ceil(1 <| 3 |> 3))
+        assertResult(3)(1 <| 3 |> 3)
     }
     
     test("4 bound by (1, 3) should be 3") {
-        assertResult(3)(ceil(1 <| 4 |> 3))
+        assertResult(3)(1 <| 4 |> 3)
     }
 }
