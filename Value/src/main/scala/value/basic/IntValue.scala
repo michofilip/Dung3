@@ -12,66 +12,15 @@ abstract class IntValue extends Value with NumericValue with ComparableValue[Int
     
     final def unary_- : IntValue = IntValue.IntNegate(this)
     
-    // add
-    final def +(that: ByteValue): IntValue = IntValue.IntAdd(this, that.toIntValue)
-    
-    final def +(that: ShortValue): IntValue = IntValue.IntAdd(this, that.toIntValue)
-    
     final def +(that: IntValue): IntValue = IntValue.IntAdd(this, that)
-    
-    final def +(that: LongValue): LongValue = LongValue.LongAdd(this.toLongValue, that)
-    
-    final def +(that: FloatValue): FloatValue = FloatValue.FloatAdd(this.toFloatValue, that)
-    
-    final def +(that: DoubleValue): DoubleValue = DoubleValue.DoubleAdd(this.toDoubleValue, that)
-    
-    // subtract
-    final def -(that: ByteValue): IntValue = IntValue.IntSubtract(this, that.toIntValue)
-    
-    final def -(that: ShortValue): IntValue = IntValue.IntSubtract(this, that.toIntValue)
     
     final def -(that: IntValue): IntValue = IntValue.IntSubtract(this, that)
     
-    final def -(that: LongValue): LongValue = LongValue.LongSubtract(this.toLongValue, that)
-    
-    final def -(that: FloatValue): FloatValue = FloatValue.FloatSubtract(this.toFloatValue, that)
-    
-    final def -(that: DoubleValue): DoubleValue = DoubleValue.DoubleSubtract(this.toDoubleValue, that)
-    
-    // multiply
-    final def *(that: ByteValue): IntValue = IntValue.IntMultiply(this, that.toIntValue)
-    
-    final def *(that: ShortValue): IntValue = IntValue.IntMultiply(this, that.toIntValue)
-    
     final def *(that: IntValue): IntValue = IntValue.IntMultiply(this, that)
-    
-    final def *(that: LongValue): LongValue = LongValue.LongMultiply(this.toLongValue, that)
-    
-    final def *(that: FloatValue): FloatValue = FloatValue.FloatMultiply(this.toFloatValue, that)
-    
-    final def *(that: DoubleValue): DoubleValue = DoubleValue.DoubleMultiply(this.toDoubleValue, that)
-    
-    // divide
-    final def /(that: ByteValue): IntValue = IntValue.IntDivide(this, that.toIntValue)
-    
-    final def /(that: ShortValue): IntValue = IntValue.IntDivide(this, that.toIntValue)
     
     final def /(that: IntValue): IntValue = IntValue.IntDivide(this, that)
     
-    final def /(that: LongValue): LongValue = LongValue.LongDivide(this.toLongValue, that)
-    
-    final def /(that: FloatValue): FloatValue = FloatValue.FloatDivide(this.toFloatValue, that)
-    
-    final def /(that: DoubleValue): DoubleValue = DoubleValue.DoubleDivide(this.toDoubleValue, that)
-    
-    // modulo
-    final def %(that: ByteValue): IntValue = IntValue.IntMod(this, that.toIntValue)
-    
-    final def %(that: ShortValue): IntValue = IntValue.IntMod(this, that.toIntValue)
-    
     final def %(that: IntValue): IntValue = IntValue.IntMod(this, that)
-    
-    final def %(that: LongValue): LongValue = LongValue.LongMod(this.toLongValue, that)
     
 }
 
