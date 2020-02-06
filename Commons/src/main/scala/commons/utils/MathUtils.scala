@@ -13,6 +13,11 @@ object MathUtils {
     
     def floor(x: Double): Int = Math.floor(x).toInt
     
+    def round(x: Double, prec: Int): Double = {
+        val tens = Math.pow(10, prec)
+        Math.round(tens * x) / tens
+    }
+    
     implicit class MathUtilsImplicits(x: Int) {
         def %%(n: Int): Int = mod(x, n)
         
