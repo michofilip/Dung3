@@ -25,3 +25,10 @@ lazy val Value = project
             commonSettings,
             libraryDependencies ++= Dependencies.valueDependencies
         )
+
+lazy val ActorSystem = project
+        //        .dependsOn(Commons, Core)
+        .settings(
+            commonSettings,
+            libraryDependencies ++= Dependencies.actorSystemDependencies
+        )
