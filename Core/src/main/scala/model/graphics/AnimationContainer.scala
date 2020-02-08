@@ -9,7 +9,7 @@ case class AnimationContainer(animation: Animation, animationSelector: Animation
 }
 
 object AnimationContainer {
-    def selectGraphics(entity: Entity)(animationContainer: AnimationContainer): AnimationContainer = {
+    def selectAnimation(entity: Entity)(animationContainer: AnimationContainer): AnimationContainer = {
         val stateOpt = entity.stateContainerOpt.map(_.state)
         val directionOpt = entity.positionContainerOpt.map(_.position.direction)
         val animationTimestamp = entity.stateContainerOpt

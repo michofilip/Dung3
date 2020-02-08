@@ -1,12 +1,12 @@
 package entity
 
 import commons.temporal.Timestamp
-import model.graphics.AnimationContainer
-import model.physics.PhysicsContainer
-import model.position.PositionContainer
+import model.graphics.{Animation, AnimationContainer, Frame}
+import model.physics.{Physics, PhysicsContainer}
 import model.position.PositionMappers.PositionMapper
-import model.state.StateContainer
+import model.position.{Coordinates, Direction, Position, PositionContainer}
 import model.state.StateMappers.StateMapper
+import model.state.{State, StateContainer}
 
 case class Entity(id: Long, name: String, initialTimestamp: Timestamp,
                   stateContainerOpt: Option[StateContainer] = None,
@@ -27,6 +27,10 @@ object Entity {
                     .map(StateContainer.update(stateMapper, timestamp))
                     .map(setStateContainer)
                     .getOrElse(entity)
+        
+        def getState: Option[State] = entity.stateContainerOpt.map(_.state)
+        
+        def getStateTimestamp: Option[Timestamp] = entity.stateContainerOpt.map(_.stateTimestamp)
     }
     
     implicit class PositionService(entity: Entity) {
@@ -39,6 +43,14 @@ object Entity {
                     .map(PositionContainer.update(positionMapper, timestamp))
                     .map(setPositionContainer)
                     .getOrElse(entity)
+        
+        def getCoordinates: Option[Coordinates] = entity.positionContainerOpt.map(_.position.coordinates)
+        
+        def getDirection: Option[Direction] = entity.positionContainerOpt.map(_.position.direction)
+        
+        def getPosition: Option[Position] = entity.positionContainerOpt.map(_.position)
+        
+        def getPositionTimestamp: Option[Timestamp] = entity.positionContainerOpt.map(_.positionTimestamp)
     }
     
     implicit class PhysicsService(entity: Entity) {
@@ -51,6 +63,12 @@ object Entity {
                     .map(PhysicsContainer.updatePhysics(entity))
                     .map(setPhysicsContainer)
                     .getOrElse(entity)
+        
+        def getPhysics: Option[Physics] = entity.physicsContainerOpt.map(_.physics)
+        
+        def isSolid: Option[Boolean] = entity.physicsContainerOpt.map(_.physics.solid)
+        
+        def isOpaque: Option[Boolean] = entity.physicsContainerOpt.map(_.physics.opaque)
     }
     
     implicit class AnimationService(entity: Entity) {
@@ -60,9 +78,15 @@ object Entity {
         
         def updateAnimation(): Entity =
             entity.animationContainerOpt
-                    .map(AnimationContainer.selectGraphics(entity))
+                    .map(AnimationContainer.selectAnimation(entity))
                     .map(setAnimationContainer)
                     .getOrElse(entity)
+        
+        def getAnimation: Option[Animation] = entity.animationContainerOpt.map(_.animation)
+        
+        def getAnimationTimestamp: Option[Timestamp] = entity.animationContainerOpt.map(_.animationTimestamp)
+        
+        def getFrame(timestamp: Timestamp: Option[Frame] = entity.animationContainerOpt.map(_.getFrame(timestamp))
     }
     
 }

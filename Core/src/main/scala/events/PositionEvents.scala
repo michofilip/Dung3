@@ -4,7 +4,7 @@ import commons.utils.FunctionUtils._
 import entity.Entity
 import events.Event._
 import model.position.{Direction, PositionMappers}
-import model.state.StateMappers
+import model.state.{State, StateMappers}
 import world.WorldFrameContext
 
 object PositionEvents {
@@ -24,8 +24,13 @@ object PositionEvents {
     final case class Step(override val entityId: Long, direction: Direction) extends Event {
         override def applyTo(entity: Entity)(implicit wfc: WorldFrameContext): EventResponse = {
             import PositionMappers._
-            entity.updatePosition(step(direction) --> rotateTo(direction), wfc.timestamp)
-                    .updateState(StateMappers.movement, wfc.timestamp)
+            entity.getState match {
+                case Some(State.Standing) => entity
+                        .updatePosition(step(direction) --> rotateTo(direction), wfc.timestamp)
+                        .updateState(StateMappers.movement, wfc.timestamp)
+                        .updateAnimation()
+                case _ => entity
+            }
         }
     }
     
