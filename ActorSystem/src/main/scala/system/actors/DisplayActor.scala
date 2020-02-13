@@ -6,7 +6,7 @@ import system.messages.DisplayMessage.DisplayWorldFrame
 
 object DisplayActor {
     
-    def receive: Behavior[DisplayWorldFrame] = Behaviors.receiveMessage {
+    def apply(): Behavior[DisplayWorldFrame] = Behaviors.receiveMessage {
         case DisplayWorldFrame(worldFrame) =>
             println(worldFrame)
             Behaviors.same

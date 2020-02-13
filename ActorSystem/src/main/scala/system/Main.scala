@@ -11,7 +11,7 @@ import system.messages.WorldFrameMessage
 import world.WorldFrame
 
 object Main extends App {
-    val actorSystem: ActorSystem[WorldFrameMessage] = ActorSystem(WorldFrameActor.receive, "WorldFrameActor")
+    val actorSystem: ActorSystem[WorldFrameMessage] = ActorSystem(WorldFrameActor(), "WorldFrameActor")
     
     val worldFrame = makeWorldFrame()
     

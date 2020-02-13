@@ -8,7 +8,7 @@ import system.messages.WorldFrameMessage.SetWorldFrame
 
 object WorldFrameCalculatorActor {
     
-    def receive: Behavior[WorldFrameCalculatorMessage] = Behaviors.receiveMessage {
+    def apply(): Behavior[WorldFrameCalculatorMessage] = Behaviors.receiveMessage {
         case NextFrame(worldFrame, externalEvents, timestamp, replayTo) =>
             val nextFrame = worldFrame.nextFrame(externalEvents, timestamp)
             replayTo ! SetWorldFrame(nextFrame)
