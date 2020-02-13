@@ -86,7 +86,7 @@ object Entity {
         
         def getAnimationTimestamp: Option[Timestamp] = entity.animationContainerOpt.map(_.animationTimestamp)
         
-        def getFrame(timestamp: Timestamp: Option[Frame] = entity.animationContainerOpt.map(_.getFrame(timestamp))
+        def getFrame(timestamp: Timestamp): Option[Frame] = entity.animationContainerOpt.map(_.getFrame(timestamp))
     }
     
 }
