@@ -2,6 +2,7 @@ package events
 
 import commons.utils.FunctionUtils._
 import entity.Entity
+import entity.EntityServices._
 import events.Event._
 import model.position.{Direction, PositionMappers}
 import model.state.{State, StateMappers}
