@@ -1,8 +1,10 @@
 package events
 
+import commons.temporal.Duration
 import commons.utils.FunctionUtils._
 import entity.Entity
 import entity.EntityServices._
+import events.ControlEvents.DelayTime
 import events.Event._
 import model.position.{Direction, PositionMappers}
 import model.state.{State, StateMappers}
@@ -25,14 +27,21 @@ object PositionEvents {
     final case class Step(override val entityId: Long, direction: Direction) extends Event {
         override def applyTo(entity: Entity)(implicit wfc: WorldFrameContext): EventResponse = {
             import PositionMappers._
-            entity.getState match {
+            
+            val responseEntity = entity.getState match {
                 case Some(State.Standing) => entity
                         .updatePosition(step(direction) --> rotateTo(direction), wfc.timestamp)
                         .updateState(StateMappers.movement, wfc.timestamp)
                         .updateAnimation()
                 case _ => entity
             }
-            //TODO finish movement
+            
+            val responseEvent = entity.getAnimationDuration match {
+                case Some(duration) if duration > Duration.zero => DelayTime(entityId, duration, FinishMovement(entityId))
+                case _ => FinishMovement(entityId)
+            }
+            
+            (responseEntity, responseEvent)
         }
     }
     

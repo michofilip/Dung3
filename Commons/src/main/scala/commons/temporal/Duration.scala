@@ -20,6 +20,8 @@ case class Duration(time: Long) {
 
 object Duration {
     
+    def zero: Duration = Duration(0)
+    
     implicit class ImplicitDuration(time: Int) {
         def milliseconds: Duration = Duration(time)
         

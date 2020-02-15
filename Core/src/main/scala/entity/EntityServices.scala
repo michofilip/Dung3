@@ -1,6 +1,6 @@
 package entity
 
-import commons.temporal.Timestamp
+import commons.temporal.{Duration, Timestamp}
 import model.graphics.{Animation, AnimationContainer, Frame}
 import model.physics.{Physics, PhysicsContainer}
 import model.position.PositionMappers.PositionMapper
@@ -94,6 +94,9 @@ object EntityServices {
         
         def getAnimation: Option[Animation] =
             entity.animationContainerOpt.map(_.animation)
+        
+        def getAnimationDuration: Option[Duration] =
+            entity.animationContainerOpt.map(_.animation.duration)
         
         def getAnimationTimestamp: Option[Timestamp] =
             entity.animationContainerOpt.map(_.animationTimestamp)
