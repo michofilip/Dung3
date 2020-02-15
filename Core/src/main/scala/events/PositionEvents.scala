@@ -32,6 +32,18 @@ object PositionEvents {
                         .updateAnimation()
                 case _ => entity
             }
+            //TODO finish movement
+        }
+    }
+    
+    final case class FinishMovement(override val entityId: Long) extends Event {
+        override def applyTo(entity: Entity)(implicit wfc: WorldFrameContext): EventResponse = {
+            entity.getState match {
+                case Some(State.Walking) => entity
+                        .updateState(StateMappers.movement, wfc.timestamp)
+                        .updateAnimation()
+                case _ => entity
+            }
         }
     }
     
