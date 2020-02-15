@@ -15,6 +15,8 @@ abstract class Event {
 object Event {
     type EventResponse = (Vector[Entity], Vector[Event])
     
+    def emptyResponse: EventResponse = (Vector.empty, Vector.empty)
+    
     implicit def en2Vector(entity: Entity): Vector[Entity] = Vector[Entity](entity)
     
     implicit def ev2Vector(event: Event): Vector[Event] = Vector(event)
