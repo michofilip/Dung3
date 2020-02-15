@@ -8,6 +8,14 @@ case class Duration(time: Long) {
     def +(that: Duration): Duration = Duration(time + that.time)
     
     def -(that: Duration): Duration = this + -that
+    
+    def <(that: Duration): Boolean = time < that.time
+    
+    def <=(that: Duration): Boolean = time <= that.time
+    
+    def >(that: Duration): Boolean = time > that.time
+    
+    def >=(that: Duration): Boolean = time >= that.time
 }
 
 object Duration {
