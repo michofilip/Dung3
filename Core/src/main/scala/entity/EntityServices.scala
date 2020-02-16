@@ -1,7 +1,7 @@
 package entity
 
 import commons.temporal.{Duration, Timestamp}
-import model.graphics.{Animation, AnimationContainer, Frame}
+import model.animation.{Animation, AnimationContainer, Frame}
 import model.physics.{Physics, PhysicsContainer}
 import model.position.PositionMappers.PositionMapper
 import model.position.{Coordinates, Direction, Position, PositionContainer}

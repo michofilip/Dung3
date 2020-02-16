@@ -1,4 +1,4 @@
-package model.graphics
+package model.animation
 
 import commons.temporal.Duration
 import commons.temporal.Duration._
@@ -16,7 +16,8 @@ object Animation {
     private def frameNo(duration: Duration, fps: Double): Int =
         floor(duration.time * fps / 1000)
     
-    private def durationFrom(length: Int, fps: Double): Duration = (length / fps * 1000).toInt.milliseconds
+    private def durationFrom(length: Int, fps: Double): Duration =
+        (length / fps * 1000).toInt.milliseconds
     
     final case class SingleFrameAnimation(frame: Frame) extends Animation {
         override val length: Int = 1

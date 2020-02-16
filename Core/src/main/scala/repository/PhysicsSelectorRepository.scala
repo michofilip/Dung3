@@ -1,7 +1,6 @@
 package repository
 
 import model.NameKey
-import model.NameKey.WoodenDoor
 import model.physics.PhysicsSelector
 import model.state.State.{Close, Closing, Locked, Locking, Open, Opening, UnLocking}
 
@@ -41,8 +40,13 @@ class PhysicsSelectorRepository(implicit physicsRepository: PhysicsRepository) {
         Some(Locked) -> physicsRepository.physicsTF,
     )
     
-    private val physicsSelectors: Map[NameKey, PhysicsSelector] = Map(WoodenDoor -> solidDoorPhysicsSelector)
+    //    private val physicsSelectors: Map[NameKey, PhysicsSelector] = Map(WoodenDoor -> solidDoorPhysicsSelector)
     
-    def getPhysicsSelector(name: NameKey): Option[PhysicsSelector] = physicsSelectors.get(name)
+    //    def getPhysicsSelector(name: NameKey): Option[PhysicsSelector] = physicsSelectors.get(name)
+    
+    def getPhysicsSelector(nameKey: NameKey): Option[PhysicsSelector] = nameKey match {
+        case NameKey.WoodenDoor => Some(solidDoorPhysicsSelector)
+        case _ => None
+    }
     
 }

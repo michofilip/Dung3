@@ -1,4 +1,4 @@
-package model.graphics
+package model.animation
 
 import commons.temporal.Timestamp
 import entity.Entity

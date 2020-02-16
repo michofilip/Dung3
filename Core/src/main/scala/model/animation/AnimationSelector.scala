@@ -1,4 +1,4 @@
-package model.graphics
+package model.animation
 
 import model.position.Direction
 import model.state.State

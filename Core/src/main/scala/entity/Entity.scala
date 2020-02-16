@@ -2,7 +2,7 @@ package entity
 
 import commons.temporal.Timestamp
 import model.NameKey
-import model.graphics.AnimationContainer
+import model.animation.AnimationContainer
 import model.physics.PhysicsContainer
 import model.position.PositionContainer
 import model.state.StateContainer
