@@ -11,98 +11,74 @@ import model.state.{State, StateContainer}
 object EntityServices {
     
     implicit class StateService(entity: Entity) {
-        def setStateContainer(stateContainer: StateContainer): Entity =
-            entity.copy(stateContainerOpt = Some(stateContainer))
-        
-        def removeStateContainer(): Entity =
-            entity.copy(stateContainerOpt = None)
+        def setStateContainer(stateContainer: Option[StateContainer]): Entity =
+            entity.copy(stateContainer = stateContainer)
         
         def updateState(stateMapper: StateMapper, timestamp: Timestamp): Entity =
-            entity.stateContainerOpt
-                    .map(StateContainer.update(stateMapper, timestamp))
-                    .map(setStateContainer)
-                    .getOrElse(entity)
+            entity.setStateContainer(entity.stateContainer.map(StateContainer.update(stateMapper, timestamp)))
         
         def getState: Option[State] =
-            entity.stateContainerOpt.map(_.state)
+            entity.stateContainer.map(_.state)
         
         def getStateTimestamp: Option[Timestamp] =
-            entity.stateContainerOpt.map(_.stateTimestamp)
+            entity.stateContainer.map(_.stateTimestamp)
     }
     
     implicit class PositionService(entity: Entity) {
-        def setPositionContainer(positionContainer: PositionContainer): Entity =
-            entity.copy(positionContainerOpt = Some(positionContainer))
-        
-        def removePositionContainer(): Entity =
-            entity.copy(positionContainerOpt = None)
+        def setPositionContainer(positionContainer: Option[PositionContainer]): Entity =
+            entity.copy(positionContainer = positionContainer)
         
         def updatePosition(positionMapper: PositionMapper, timestamp: Timestamp): Entity =
-            entity.positionContainerOpt
-                    .map(PositionContainer.update(positionMapper, timestamp))
-                    .map(setPositionContainer)
-                    .getOrElse(entity)
+            entity.setPositionContainer(entity.positionContainer.map(PositionContainer.update(positionMapper, timestamp)))
         
         def getCoordinates: Option[Coordinates] =
-            entity.positionContainerOpt.map(_.position.coordinates)
+            entity.positionContainer.map(_.position.coordinates)
         
         def getDirection: Option[Direction] =
-            entity.positionContainerOpt.map(_.position.direction)
+            entity.positionContainer.map(_.position.direction)
         
         def getPosition: Option[Position] =
-            entity.positionContainerOpt.map(_.position)
+            entity.positionContainer.map(_.position)
         
         def getPositionTimestamp: Option[Timestamp] =
-            entity.positionContainerOpt.map(_.positionTimestamp)
+            entity.positionContainer.map(_.positionTimestamp)
     }
     
     implicit class PhysicsService(entity: Entity) {
-        def setPhysicsContainer(physicsContainer: PhysicsContainer): Entity =
-            entity.copy(physicsContainerOpt = Some(physicsContainer))
-        
-        def removePhysicsContainer(): Entity =
-            entity.copy(physicsContainerOpt = None)
+        def setPhysicsContainer(physicsContainer: Option[PhysicsContainer]): Entity =
+            entity.copy(physicsContainer = physicsContainer)
         
         def updatePhysics(): Entity =
-            entity.physicsContainerOpt
-                    .map(PhysicsContainer.updatePhysics(entity))
-                    .map(setPhysicsContainer)
-                    .getOrElse(entity)
+            entity.setPhysicsContainer(entity.physicsContainer.map(PhysicsContainer.updatePhysics(entity)))
         
         def getPhysics: Option[Physics] =
-            entity.physicsContainerOpt.map(_.physics)
+            entity.physicsContainer.map(_.physics)
         
         def isSolid: Option[Boolean] =
-            entity.physicsContainerOpt.map(_.physics.solid)
+            entity.physicsContainer.map(_.physics.solid)
         
         def isOpaque: Option[Boolean] =
-            entity.physicsContainerOpt.map(_.physics.opaque)
+            entity.physicsContainer.map(_.physics.opaque)
     }
     
     implicit class AnimationService(entity: Entity) {
-        def setAnimationContainer(animationContainer: AnimationContainer): Entity =
-            entity.copy(animationContainerOpt = Some(animationContainer))
-        
-        def removeAnimationContainer(): Entity =
-            entity.copy(animationContainerOpt = None)
+        def setAnimationContainer(animationContainer: Option[AnimationContainer]): Entity =
+            entity.copy(animationContainer = animationContainer)
         
         def updateAnimation(): Entity =
-            entity.animationContainerOpt
-                    .map(AnimationContainer.selectAnimation(entity))
-                    .map(setAnimationContainer)
-                    .getOrElse(entity)
+            entity.setAnimationContainer(entity.animationContainer.map(AnimationContainer.selectAnimation(entity)))
         
         def getAnimation: Option[Animation] =
-            entity.animationContainerOpt.map(_.animation)
+            entity.animationContainer.map(_.animation)
         
         def getAnimationDuration: Option[Duration] =
-            entity.animationContainerOpt.map(_.animation.duration)
+            entity.animationContainer.map(_.animation.duration)
         
         def getAnimationTimestamp: Option[Timestamp] =
-            entity.animationContainerOpt.map(_.animationTimestamp)
+            entity.animationContainer.map(_.animationTimestamp)
         
         def getFrame(timestamp: Timestamp): Option[Frame] =
-            entity.animationContainerOpt.map(_.getFrame(timestamp))
+            entity.animationContainer.map(_.getFrame(timestamp))
     }
     
 }

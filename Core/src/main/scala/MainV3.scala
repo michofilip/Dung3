@@ -9,7 +9,7 @@ import world.WorldFrame
 object MainV3 extends App {
     val initialTimestamp = Timestamp.now
     val position = PositionContainer(Position(Coordinates(10, 20), Direction.North), initialTimestamp)
-    val entity = Entity(id = 1, nameKey = NameKey.WoodenDoor, initialTimestamp = Timestamp.now, positionContainerOpt = Some(position))
+    val entity = Entity(id = 1, nameKey = NameKey.WoodenDoor, initialTimestamp = Timestamp.now, positionContainer = Some(position))
     
     val entityRepository = EntityRepository(Seq(entity))
     val events = Vector[Event](PositionEvents.Step(1, Direction.South))

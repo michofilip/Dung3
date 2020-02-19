@@ -6,4 +6,6 @@ object NameKey {
     
     final case object WoodenDoor extends NameKey
     
+    final case object Player extends NameKey
+    
 }
