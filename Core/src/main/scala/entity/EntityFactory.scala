@@ -6,10 +6,9 @@ import model.NameKey
 import model.physics.PhysicsContainer
 import model.position.{Position, PositionContainer}
 import model.state.{State, StateContainer}
-import repository.{PhysicsRepository, PhysicsSelectorRepository}
+import repository.PhysicsSelectorRepository
 
-class EntityFactory(implicit physicsRepository: PhysicsRepository,
-                    physicsSelectorRepository: PhysicsSelectorRepository) {
+class EntityFactory(implicit physicsSelectorRepository: PhysicsSelectorRepository) {
     
     def makePlayer(id: Long, timestamp: Timestamp, position: Position): Entity = {
         val nameKey = NameKey.Player
@@ -17,8 +16,7 @@ class EntityFactory(implicit physicsRepository: PhysicsRepository,
         
         val stateContainer = Some(StateContainer(state, timestamp))
         val positionContainer = Some(PositionContainer(position, timestamp))
-        val physicsContainer = physicsSelectorRepository.getPhysicsSelector(nameKey)
-                .map(physicsSelector => PhysicsContainer(physicsRepository.physicsFF, physicsSelector))
+        val physicsContainer = PhysicsContainer(Some(state), physicsSelectorRepository.getPhysicsSelector(nameKey))
         
         Entity(id = id, nameKey = nameKey, initialTimestamp = timestamp)
                 .setStateContainer(stateContainer)

@@ -31,14 +31,14 @@ object EntityServices {
         def updatePosition(positionMapper: PositionMapper, timestamp: Timestamp): Entity =
             entity.setPositionContainer(entity.positionContainer.map(PositionContainer.update(positionMapper, timestamp)))
         
-        def getCoordinates: Option[Coordinates] =
-            entity.positionContainer.map(_.position.coordinates)
-        
-        def getDirection: Option[Direction] =
-            entity.positionContainer.map(_.position.direction)
-        
         def getPosition: Option[Position] =
             entity.positionContainer.map(_.position)
+        
+        def getCoordinates: Option[Coordinates] =
+            getPosition.map(_.coordinates)
+        
+        def getDirection: Option[Direction] =
+            getPosition.map(_.direction)
         
         def getPositionTimestamp: Option[Timestamp] =
             entity.positionContainer.map(_.positionTimestamp)
@@ -49,16 +49,16 @@ object EntityServices {
             entity.copy(physicsContainer = physicsContainer)
         
         def updatePhysics(): Entity =
-            entity.setPhysicsContainer(entity.physicsContainer.map(PhysicsContainer.updatePhysics(entity)))
+            entity.setPhysicsContainer(entity.physicsContainer.map(PhysicsContainer.selectPhysics(entity)))
         
         def getPhysics: Option[Physics] =
             entity.physicsContainer.map(_.physics)
         
         def isSolid: Option[Boolean] =
-            entity.physicsContainer.map(_.physics.solid)
+            getPhysics.map(_.solid)
         
         def isOpaque: Option[Boolean] =
-            entity.physicsContainer.map(_.physics.opaque)
+            getPhysics.map(_.opaque)
     }
     
     implicit class AnimationService(entity: Entity) {
