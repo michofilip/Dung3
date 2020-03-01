@@ -8,9 +8,19 @@ case class Duration(time: Long) {
     def +(that: Duration): Duration = Duration(time + that.time)
     
     def -(that: Duration): Duration = this + -that
+    
+    def <(that: Duration): Boolean = time < that.time
+    
+    def <=(that: Duration): Boolean = time <= that.time
+    
+    def >(that: Duration): Boolean = time > that.time
+    
+    def >=(that: Duration): Boolean = time >= that.time
 }
 
 object Duration {
+    
+    def zero: Duration = Duration(0)
     
     implicit class ImplicitDuration(time: Int) {
         def milliseconds: Duration = Duration(time)

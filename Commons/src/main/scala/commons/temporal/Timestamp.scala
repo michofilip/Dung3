@@ -6,6 +6,14 @@ case class Timestamp(time: Long) {
     def -(duration: Duration): Timestamp = Timestamp(time - duration.time)
     
     def -(timestamp: Timestamp): Duration = Duration.difference(timestamp, this)
+    
+    def <(that: Timestamp): Boolean = time < that.time
+    
+    def <=(that: Timestamp): Boolean = time <= that.time
+    
+    def >(that: Timestamp): Boolean = time > that.time
+    
+    def >=(that: Timestamp): Boolean = time >= that.time
 }
 
 object Timestamp {

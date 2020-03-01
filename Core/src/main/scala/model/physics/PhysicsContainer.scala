@@ -1,15 +1,18 @@
 package model.physics
 
-import entity.Entity
+import model.state.State
 
 case class PhysicsContainer(physics: Physics, physicsSelector: PhysicsSelector)
 
 object PhysicsContainer {
-    def updatePhysics(entity: Entity)(physicsContainer: PhysicsContainer): PhysicsContainer = {
-        val stateOpt = entity.stateContainerOpt.map(_.state)
-        
+    
+    def initialise(stateOpt: Option[State])(physicsSelector: PhysicsSelector): Option[PhysicsContainer] =
+        physicsSelector.select(stateOpt)
+                .map(physics => PhysicsContainer(physics, physicsSelector))
+    
+    def update(stateOpt: Option[State])(physicsContainer: PhysicsContainer): PhysicsContainer =
         physicsContainer.physicsSelector.select(stateOpt)
-                .map(physics => PhysicsContainer(physics, physicsContainer.physicsSelector))
+                .map(physics => physicsContainer.copy(physics = physics))
                 .getOrElse(physicsContainer)
-    }
+    
 }
