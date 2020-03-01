@@ -1,7 +1,6 @@
 package model.animation
 
 import commons.temporal.Timestamp
-import entity.Entity
 import model.position.Direction
 import model.state.State
 
@@ -12,22 +11,14 @@ case class AnimationContainer(animation: Animation, animationSelector: Animation
 
 object AnimationContainer {
     
-    def apply(stateOpt: Option[State], directionOpt: Option[Direction], animationTimestamp: Timestamp,
-              animationSelectorOpt: Option[AnimationSelector]): Option[AnimationContainer] =
-        animationSelectorOpt.flatMap { animationSelector =>
-            animationSelector.select(stateOpt, directionOpt)
-                    .map(animation => new AnimationContainer(animation, animationSelector, animationTimestamp))
-        }
+    def initialize(stateOpt: Option[State], directionOpt: Option[Direction], animationTimestamp: Timestamp)
+                  (animationSelector: AnimationSelector): Option[AnimationContainer] =
+        animationSelector.select(stateOpt, directionOpt)
+                .map(animation => AnimationContainer(animation, animationSelector, animationTimestamp))
     
-    def selectAnimationFor(entity: Entity)(animationContainer: AnimationContainer): AnimationContainer = {
-        val stateOpt = entity.stateContainer.map(_.state)
-        val directionOpt = entity.positionContainer.map(_.position.direction)
-        val animationTimestamp = entity.stateContainer
-                .map(_.stateTimestamp)
-                .getOrElse(entity.initialTimestamp)
-        
+    def selectAnimationFor(stateOpt: Option[State], directionOpt: Option[Direction], animationTimestamp: Timestamp)
+                          (animationContainer: AnimationContainer): AnimationContainer =
         animationContainer.animationSelector.select(stateOpt, directionOpt)
-                .map(animation => AnimationContainer(animation, animationContainer.animationSelector, animationTimestamp))
+                .map(animation => animationContainer.copy(animation = animation, animationTimestamp = animationTimestamp))
                 .getOrElse(animationContainer)
-    }
 }

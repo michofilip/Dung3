@@ -49,7 +49,11 @@ object EntityServices {
             entity.copy(physicsContainer = physicsContainer)
         
         def updatePhysics(): Entity =
-            entity.setPhysicsContainer(entity.physicsContainer.map(PhysicsContainer.selectPhysicsFor(entity)))
+            entity.setPhysicsContainer {
+                entity.physicsContainer.map {
+                    PhysicsContainer.update(entity.getState)
+                }
+            }
         
         def getPhysics: Option[Physics] =
             entity.physicsContainer.map(_.physics)
@@ -65,8 +69,15 @@ object EntityServices {
         def setAnimationContainer(animationContainer: Option[AnimationContainer]): Entity =
             entity.copy(animationContainer = animationContainer)
         
-        def updateAnimation(): Entity =
-            entity.setAnimationContainer(entity.animationContainer.map(AnimationContainer.selectAnimationFor(entity)))
+        def updateAnimation(): Entity = {
+            val animationTimestamp = entity.getStateTimestamp.getOrElse(entity.initialTimestamp)
+            
+            entity.setAnimationContainer {
+                entity.animationContainer.map {
+                    AnimationContainer.selectAnimationFor(entity.getState, entity.getDirection, animationTimestamp)
+                }
+            }
+        }
         
         def getAnimation: Option[Animation] =
             entity.animationContainer.map(_.animation)
