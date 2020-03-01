@@ -49,7 +49,7 @@ object EntityServices {
             entity.copy(physicsContainer = physicsContainer)
         
         def updatePhysics(): Entity =
-            entity.setPhysicsContainer(entity.physicsContainer.map(PhysicsContainer.selectPhysics(entity)))
+            entity.setPhysicsContainer(entity.physicsContainer.map(PhysicsContainer.selectPhysicsFor(entity)))
         
         def getPhysics: Option[Physics] =
             entity.physicsContainer.map(_.physics)
@@ -66,7 +66,7 @@ object EntityServices {
             entity.copy(animationContainer = animationContainer)
         
         def updateAnimation(): Entity =
-            entity.setAnimationContainer(entity.animationContainer.map(AnimationContainer.selectAnimation(entity)))
+            entity.setAnimationContainer(entity.animationContainer.map(AnimationContainer.selectAnimationFor(entity)))
         
         def getAnimation: Option[Animation] =
             entity.animationContainer.map(_.animation)
