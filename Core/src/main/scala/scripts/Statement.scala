@@ -39,4 +39,11 @@ object Statement {
     
     final case class MultiWhenThereforeOtherwise(whenThereforeSeq: Vector[WhenTherefore], otherwiseStatement: Statement) extends Statement
     
+    final case class Loop(condition: BooleanValue) {
+        def body(statements: Statement*): LoopBody =
+            LoopBody(condition, Block(statements.toVector))
+    }
+    
+    final case class LoopBody(condition: BooleanValue, body: Statement) extends Statement
+    
 }

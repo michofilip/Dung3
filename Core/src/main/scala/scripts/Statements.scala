@@ -1,6 +1,6 @@
 package scripts
 
-import scripts.Statement.{Block, Execute, When}
+import scripts.Statement.{Block, Execute, Loop, When}
 import value.basic.BooleanValue
 
 object Statements {
@@ -12,4 +12,7 @@ object Statements {
     
     def when(condition: BooleanValue): When =
         When(condition)
+    
+    def loop(condition: BooleanValue): Loop =
+        Loop(condition)
 }

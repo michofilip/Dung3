@@ -6,7 +6,7 @@ import value.basic.BooleanValue.BooleanConstant
 object MainScript extends App {
     val condition: BooleanValue = BooleanConstant(true)
     
-    private val otherwise: Statement =
+    val x1: Statement =
         when(condition).therefore(
             execute(),
             execute()
@@ -18,5 +18,11 @@ object MainScript extends App {
             execute()
         )
     
-    println(otherwise)
+    val x2: Statement =
+        loop(condition).body(
+            execute(),
+            execute()
+        )
+    
+    println(x1)
 }
