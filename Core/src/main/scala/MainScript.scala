@@ -10,19 +10,16 @@ object MainScript extends App {
     val value1: Value = IntConstant(2)
     
     val x1: Statement =
-        when(condition)
-                .therefore(
-                    execute(),
-                    execute()
-                )
-                .otherwise(when(condition).therefore(
-                    execute(),
-                    execute()
-                ))
-                .otherwise(
-                    execute(),
-                    execute()
-                )
+        when(condition).therefore(
+            execute(),
+            execute()
+        ).otherwise(when(condition).therefore(
+            execute(),
+            execute()
+        )).otherwise(
+            execute(),
+            execute()
+        )
     
     val x2: Statement =
         loop(condition).body(
@@ -31,27 +28,27 @@ object MainScript extends App {
         )
     
     val x3: Statement =
-        choose(value1)
-                .variant(value(IntConstant(1)).therefore(
-                    execute(),
-                    execute()
-                ))
-                .variant(value(IntConstant(2)).or(IntConstant(3)).therefore(
-                    execute(),
-                    execute()
-                ))
-                .variant(value(IntConstant(4)).when(condition).therefore(
-                    execute(),
-                    execute()
-                ))
-                .variant(value(IntConstant(4)).therefore(
-                    execute(),
-                    execute()
-                ))
-                .otherwise(
-                    execute(),
-                    execute()
-                )
+        choose(value1).variants(
+            value(IntConstant(1)).therefore(
+                execute(),
+                execute()
+            ),
+            value(IntConstant(2), IntConstant(3)).therefore(
+                execute(),
+                execute()
+            ),
+            value(IntConstant(4)).when(condition).therefore(
+                execute(),
+                execute()
+            ),
+            value(IntConstant(4)).therefore(
+                execute(),
+                execute()
+            )
+        ).otherwise(
+            execute(),
+            execute()
+        )
     
     println(x1)
     println(x2)

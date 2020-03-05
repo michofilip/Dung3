@@ -45,48 +45,31 @@ object Statement {
     
     final case class LoopBody(condition: BooleanValue, body: Statement) extends Statement
     
-    final case class Variant(value: Value) {
-        def or(value: Value): MultiVariant =
-            MultiVariant(Vector(this.value, value))
+    final case class Variant(values: Vector[Value]) {
+        def when(condition: BooleanValue): VariantWhen =
+            VariantWhen(values, condition)
         
-        def when(condition: BooleanValue): MultiVariantCondition =
-            MultiVariantCondition(Vector(value), condition)
-        
-        def therefore(statements: Statement*): MultiVariantConditionTherefore =
-            MultiVariantConditionTherefore(Vector(value), BooleanConstant(true), Block(statements.toVector))
+        def therefore(statements: Statement*): VariantWhenTherefore =
+            VariantWhenTherefore(values, BooleanConstant(true), Block(statements.toVector))
     }
     
-    final case class MultiVariant(values: Vector[Value]) {
-        def or(value: Value): MultiVariant =
-            MultiVariant(values :+ value)
-        
-        def when(condition: BooleanValue): MultiVariantCondition =
-            MultiVariantCondition(values, condition)
-        
-        def therefore(statements: Statement*): MultiVariantConditionTherefore =
-            MultiVariantConditionTherefore(values, BooleanConstant(true), Block(statements.toVector))
+    final case class VariantWhen(values: Vector[Value], condition: BooleanValue) {
+        def therefore(statements: Statement*): VariantWhenTherefore =
+            VariantWhenTherefore(values, condition, Block(statements.toVector))
     }
     
-    final case class MultiVariantCondition(values: Vector[Value], condition: BooleanValue) {
-        def therefore(statements: Statement*): MultiVariantConditionTherefore =
-            MultiVariantConditionTherefore(values, condition, Block(statements.toVector))
-    }
-    
-    final case class MultiVariantConditionTherefore(values: Vector[Value], condition: BooleanValue, therefore: Statement)
+    final case class VariantWhenTherefore(values: Vector[Value], condition: BooleanValue, therefore: Statement)
     
     final case class Choose(value: Value) {
-        def variant(multiVariantTherefore: MultiVariantConditionTherefore): ChooseMultiVariantTherefore =
-            ChooseMultiVariantTherefore(value, Vector(multiVariantTherefore))
+        def variants(variant: VariantWhenTherefore, variants: VariantWhenTherefore*): ChooseVariants =
+            ChooseVariants(value, variant +: variants.toVector)
     }
     
-    final case class ChooseMultiVariantTherefore(value: Value, variantThereforeSeq: Vector[MultiVariantConditionTherefore]) extends Statement {
-        def variant(multiVariantThen: MultiVariantConditionTherefore): ChooseMultiVariantTherefore =
-            ChooseMultiVariantTherefore(value, variantThereforeSeq :+ multiVariantThen)
-        
-        def otherwise(statements: Statement*): ChooseMultiVariantThereforeOtherwise =
-            ChooseMultiVariantThereforeOtherwise(value, variantThereforeSeq, Block(statements.toVector))
+    final case class ChooseVariants(value: Value, variants: Vector[VariantWhenTherefore]) extends Statement {
+        def otherwise(statements: Statement*): ChooseVariantsOtherwise =
+            ChooseVariantsOtherwise(value, variants, Block(statements.toVector))
     }
     
-    final case class ChooseMultiVariantThereforeOtherwise(value: Value, variantThenSeq: Vector[MultiVariantConditionTherefore], otherwise: Statement) extends Statement
+    final case class ChooseVariantsOtherwise(value: Value, variants: Vector[VariantWhenTherefore], otherwise: Statement) extends Statement
     
 }
