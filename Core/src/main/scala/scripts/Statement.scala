@@ -61,7 +61,7 @@ object Statement {
     final case class VariantWhenTherefore(values: Vector[Value], condition: BooleanValue, therefore: Statement)
     
     final case class Choose(value: Value) {
-        def variants(variant: VariantWhenTherefore, variants: VariantWhenTherefore*): ChooseVariants =
+        def from(variant: VariantWhenTherefore, variants: VariantWhenTherefore*): ChooseVariants =
             ChooseVariants(value, variant +: variants.toVector)
     }
     

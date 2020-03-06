@@ -17,7 +17,7 @@ object Statements {
     def loop(condition: BooleanValue): Loop =
         Loop(condition)
     
-    def value(value: Value, values: Value*): Variant =
+    def variant(value: Value, values: Value*): Variant =
         Variant(value +: values.toVector)
     
     def choose(value: Value): Choose =

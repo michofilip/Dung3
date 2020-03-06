@@ -7,7 +7,7 @@ import scripts.Statements._
 
 object MainScript extends App {
     val condition: BooleanValue = BooleanConstant(true)
-    val value1: Value = IntConstant(2)
+    val value: Value = IntConstant(2)
     
     val x1: Statement =
         when(condition).therefore(
@@ -28,20 +28,20 @@ object MainScript extends App {
         )
     
     val x3: Statement =
-        choose(value1).variants(
-            value(IntConstant(1)).therefore(
+        choose(value).from(
+            variant(IntConstant(1)).therefore(
                 execute(),
                 execute()
             ),
-            value(IntConstant(2), IntConstant(3)).therefore(
+            variant(IntConstant(2), IntConstant(3)).therefore(
                 execute(),
                 execute()
             ),
-            value(IntConstant(4)).when(condition).therefore(
+            variant(IntConstant(4)).when(condition).therefore(
                 execute(),
                 execute()
             ),
-            value(IntConstant(4)).therefore(
+            variant(IntConstant(4)).therefore(
                 execute(),
                 execute()
             )
