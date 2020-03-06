@@ -13,10 +13,10 @@ object MainScript extends App {
         when(condition).therefore(
             execute(),
             execute()
-        ).otherwise(when(condition).therefore(
+        ).otherwiseWhen(condition).therefore(
             execute(),
             execute()
-        )).otherwise(
+        ).otherwise(
             execute(),
             execute()
         )

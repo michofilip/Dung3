@@ -16,24 +16,23 @@ object Statement {
     final case class Block(statements: Vector[Statement]) extends Statement
     
     final case class When(condition: BooleanValue) {
-        def therefore(statements: Statement*): WhenTherefore =
-            WhenTherefore(condition, Block(statements.toVector))
+        def therefore(statements: Statement*): MultiWhenTherefore =
+            MultiWhenTherefore(Vector(WhenTherefore(condition, Block(statements.toVector))))
     }
     
-    final case class WhenTherefore(condition: BooleanValue, thereforeStatement: Statement) extends Statement {
-        def otherwise(whenTherefore: WhenTherefore): MultiWhenTherefore =
-            MultiWhenTherefore(Vector(this, whenTherefore))
-        
-        def otherwise(statements: Statement*): MultiWhenThereforeOtherwise =
-            MultiWhenThereforeOtherwise(Vector(this), Block(statements.toVector))
-    }
+    final case class WhenTherefore(condition: BooleanValue, thereforeStatement: Statement)
     
     final case class MultiWhenTherefore(whenThereforeSeq: Vector[WhenTherefore]) extends Statement {
-        def otherwise(whenTherefore: WhenTherefore): MultiWhenTherefore =
-            MultiWhenTherefore(whenThereforeSeq :+ whenTherefore)
+        def otherwiseWhen(condition: BooleanValue): MultiWhenThereforeWhen =
+            MultiWhenThereforeWhen(whenThereforeSeq, condition)
         
         def otherwise(statements: Statement*): MultiWhenThereforeOtherwise =
             MultiWhenThereforeOtherwise(whenThereforeSeq, Block(statements.toVector))
+    }
+    
+    final case class MultiWhenThereforeWhen(whenThereforeSeq: Vector[WhenTherefore], condition: BooleanValue) {
+        def therefore(statements: Statement*): MultiWhenTherefore =
+            MultiWhenTherefore(whenThereforeSeq :+ WhenTherefore(condition, Block(statements.toVector)))
     }
     
     final case class MultiWhenThereforeOtherwise(whenThereforeSeq: Vector[WhenTherefore], otherwiseStatement: Statement) extends Statement
