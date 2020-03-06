@@ -2,8 +2,8 @@ import _root_.value.Value
 import _root_.value.basic.BooleanValue
 import _root_.value.basic.BooleanValue.BooleanConstant
 import _root_.value.basic.IntValue.IntConstant
-import scripts.Statement
 import scripts.Statements._
+import scripts.{Statement, StatementCompiler}
 
 object MainScript extends App {
     val condition: BooleanValue = BooleanConstant(true)
@@ -50,7 +50,20 @@ object MainScript extends App {
             execute()
         )
     
-    println(x1)
-    println(x2)
-    println(x3)
+    //    println(x1)
+    //    println(x2)
+    //    println(x3)
+    
+    val x0 =
+        loop(condition).body(
+            when(condition).therefore(
+                execute()
+            ).otherwiseWhen(condition).therefore(
+                execute()
+            ).otherwise(
+                execute()
+            )
+        )
+    
+    StatementCompiler.compile(x0).foreach(println)
 }
