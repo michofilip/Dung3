@@ -6,8 +6,8 @@ import scripts.Statements._
 import scripts.{Statement, StatementCompiler}
 
 object MainScript extends App {
-    val condition: BooleanValue = BooleanConstant(true)
-    val value: Value = IntConstant(2)
+    val condition: BooleanValue = BooleanConstant(false)
+    val value: Value = IntConstant(0)
     
     val x1: Statement =
         when(condition).therefore(
@@ -55,12 +55,8 @@ object MainScript extends App {
     //    println(x3)
     
     val x0 =
-        loop(condition).body(
-            when(condition).therefore(
-                execute()
-            ).otherwiseWhen(condition).therefore(
-                execute()
-            ).otherwise(
+        choose(value).from(
+            variant(IntConstant(1)).therefore(
                 execute()
             )
         )
