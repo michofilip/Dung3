@@ -42,22 +42,22 @@ object StatementCompiler {
     
     private def compileBlock(statements: Vector[Statement],
                              instructions: Vector[Instruction], label: Int): (Vector[Instruction], Int) = {
-        val (blockInstructions, afterBlockLabel) = statements.foldLeft((instructions, label)) {
-            case ((instructions, labelId), statement) => compile(statement, instructions, labelId)
+        val (newInstructions, afterBlockLabel) = statements.foldLeft((instructions, label)) {
+            case ((instructions, label), statement) => compile(statement, instructions, label)
         }
         
-        (instructions ++ blockInstructions, afterBlockLabel)
+        (instructions ++ newInstructions, afterBlockLabel)
     }
     
     private def compileWhenThereforeSeq(whenThereforeSeq: Vector[WhenTherefore], otherwiseStatement: Statement,
                                         label: Int): (Vector[Instruction], Int) = {
         whenThereforeSeq match {
-            case WhenTherefore(condition, thereforeStatement) +: tail =>
+            case WhenTherefore(condition, thereforeStatement) +: rest =>
                 val elseLabel = label
                 val exitLabel = label + 1
                 
                 val (thenInstructions, afterThenLabel) = compile(thereforeStatement, Vector.empty, exitLabel + 1)
-                val (elseInstructions, afterElseLabel) = compileWhenThereforeSeq(tail, otherwiseStatement, afterThenLabel + 1)
+                val (elseInstructions, afterElseLabel) = compileWhenThereforeSeq(rest, otherwiseStatement, afterThenLabel + 1)
                 
                 val newInstructions = TEST(condition) ++
                         GOTO(elseLabel) ++
@@ -75,13 +75,14 @@ object StatementCompiler {
     
     private def compileWhen(whenThereforeSeq: Vector[WhenTherefore], otherwiseStatement: Statement,
                             instructions: Vector[Instruction], label: Int): (Vector[Instruction], Int) = {
-        val (whenInstructions, afterWhenLabel) =
+        val (newInstructions, afterWhenLabel) =
             compileWhenThereforeSeq(whenThereforeSeq, otherwiseStatement, label)
         
-        (instructions ++ whenInstructions, afterWhenLabel)
+        (instructions ++ newInstructions, afterWhenLabel)
     }
     
-    private def compileLoop(condition: BooleanValue, body: Statement, instructions: Vector[Instruction], label: Int): (Vector[Instruction], Int) = {
+    private def compileLoop(condition: BooleanValue, body: Statement,
+                            instructions: Vector[Instruction], label: Int): (Vector[Instruction], Int) = {
         val loopLabel = label
         val exitLabel = label + 1
         
@@ -97,7 +98,8 @@ object StatementCompiler {
         (instructions ++ newInstructions, afterLoopLabelId)
     }
     
-    private def compileVariant(variantWhenTherefore: VariantWhenTherefore, chooseValue: Value, exitLabel: Int, label: Int): (Vector[Instruction], Int) = {
+    private def compileVariant(variantWhenTherefore: VariantWhenTherefore, chooseValue: Value, exitLabel: Int,
+                               label: Int): (Vector[Instruction], Int) = {
         val variantExitLabel = label
         val (variantInstructions, afterVariantLabel) = compile(variantWhenTherefore.therefore, Vector.empty, variantExitLabel + 1)
         
@@ -119,8 +121,8 @@ object StatementCompiler {
         val exitLabel = label
         
         val (variantInstructions, afterVariantLabel) = variants.foldLeft((Vector.empty[Instruction], exitLabel + 1)) {
-            case ((instructions, labelId), variant) =>
-                val (newInstructions, afterVariantLabel) = compileVariant(variant, value, exitLabel, labelId)
+            case ((instructions, label), variant) =>
+                val (newInstructions, afterVariantLabel) = compileVariant(variant, value, exitLabel, label)
                 (instructions ++ newInstructions, afterVariantLabel)
         }
         val (otherwiseInstructions, afterOtherwiseLabel) = compile(otherwise, Vector.empty, afterVariantLabel)

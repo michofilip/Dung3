@@ -5,9 +5,7 @@ import value.Value
 import value.basic.BooleanValue
 import value.basic.BooleanValue.BooleanConstant
 
-sealed abstract class Statement {
-    
-}
+sealed abstract class Statement
 
 object Statement {
     

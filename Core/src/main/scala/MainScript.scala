@@ -56,22 +56,11 @@ object MainScript extends App {
     
     val x0 =
         choose(value).from(
-            variant(IntConstant(1)).therefore(
-                execute(),
-                loop(condition).body(
-                    execute(),
-                    execute()
-                )
+            variant(IntConstant(1), IntConstant(2), IntConstant(3)).when(condition).therefore(
+                execute()
             )
         ).otherwise(
-            when(condition).therefore(
-                execute(),
-                execute()
-            ).otherwise(
-                execute(),
-                execute(),
-                execute()
-            )
+            execute()
         )
     
     StatementCompiler.compile(x0).foreach(println)
