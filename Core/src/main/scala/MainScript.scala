@@ -57,6 +57,19 @@ object MainScript extends App {
     val x0 =
         choose(value).from(
             variant(IntConstant(1)).therefore(
+                execute(),
+                loop(condition).body(
+                    execute(),
+                    execute()
+                )
+            )
+        ).otherwise(
+            when(condition).therefore(
+                execute(),
+                execute()
+            ).otherwise(
+                execute(),
+                execute(),
                 execute()
             )
         )
