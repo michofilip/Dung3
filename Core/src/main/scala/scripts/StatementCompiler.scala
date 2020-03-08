@@ -103,9 +103,14 @@ object StatementCompiler {
         val variantExitLabelId = labelId
         val (variantInstructions, afterVariantLabelId) = compile(variantWhenTherefore.therefore, Vector.empty, variantExitLabelId + 1)
         
-        val condition = variantWhenTherefore.values
+        val valueCondition = variantWhenTherefore.values
                 .map(value => chooseValue === value)
-                .reduceLeft(_ || _) && variantWhenTherefore.condition
+                .reduceLeft(_ || _)
+        
+        val condition = variantWhenTherefore.conditionOpt match {
+            case Some(condition) => valueCondition && condition
+            case None => valueCondition
+        }
         
         val newInstructions = TEST(condition) ++
                 GOTO(variantExitLabelId) ++

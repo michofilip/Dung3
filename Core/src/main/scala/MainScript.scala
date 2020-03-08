@@ -3,7 +3,7 @@ import _root_.value.basic.BooleanValue
 import _root_.value.basic.BooleanValue.BooleanConstant
 import _root_.value.basic.IntValue.IntConstant
 import scripts.Statements._
-import scripts.{Statement, StatementCompiler}
+import scripts.{Script, Statement}
 
 object MainScript extends App {
     val condition: BooleanValue = BooleanConstant(false)
@@ -63,5 +63,8 @@ object MainScript extends App {
             execute()
         )
     
-    StatementCompiler.compile(x0).foreach(println)
+    //    StatementCompiler.compile(x0).foreach(println)
+    
+    Script(x3).instructions.foreach(println)
+//    println(Script(x3).getNextInstruction(4))
 }
