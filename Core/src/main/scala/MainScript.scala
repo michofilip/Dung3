@@ -66,5 +66,5 @@ object MainScript extends App {
     //    StatementCompiler.compile(x0).foreach(println)
     
     Script(x3).instructions.foreach(println)
-//    println(Script(x3).getNextInstruction(4))
+    println(Script(x3).getNext(4))
 }

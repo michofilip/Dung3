@@ -17,14 +17,14 @@ case class Script(instructions: Vector[Instruction]) {
         else
             EXIT(1)
     
-    def getNextInstruction(lineNo: Int): Instruction =
+    def getNext(lineNo: Int): (Int, Instruction) =
         getInstruction(lineNo) match {
-            case LABEL(_) => getNextInstruction(lineNo + 1)
+            case LABEL(_) => getNext(lineNo + 1)
             case GOTO(labelId) => labelMap.get(labelId) match {
-                case Some(lineNo) => getNextInstruction(lineNo + 1)
-                case None => EXIT(2)
+                case Some(lineNo) => getNext(lineNo + 1)
+                case None => (lineNo, EXIT(2))
             }
-            case instruction => instruction
+            case instruction => (lineNo, instruction)
         }
 }
 
