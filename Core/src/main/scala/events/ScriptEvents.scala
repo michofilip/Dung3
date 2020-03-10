@@ -1,19 +1,19 @@
 package events
 
 import entity.Entity
+import entity.EntityServices._
 import events.Event.{EventResponse, _}
-import scripts.Instruction.{EXECUTE, EXIT, TEST}
-import scripts.Script
+import model.script.Script
+import statement.Instruction.{EXECUTE, EXIT, TEST}
 import world.WorldFrameContext
 
 object ScriptEvents {
     
-    // script
     final case class RunScript(override val entityId: Long, scriptName: String) extends Event {
         override def applyTo(entity: Entity)(implicit wfc: WorldFrameContext): EventResponse = {
-            entity match {
-                //            case ent: ScriptProperty => (entity, ExecuteScriptLine(entityId, ent.getScript(scriptName), 0))
-                case _ => entity
+            entity.getScript(scriptName) match {
+                case Some(script) => (entity, ExecuteScriptLine(entityId, script, 0))
+                case None => entity
             }
         }
     }

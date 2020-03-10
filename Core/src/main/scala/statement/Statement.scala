@@ -1,4 +1,4 @@
-package scripts
+package statement
 
 import events.Event
 import value.Value

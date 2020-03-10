@@ -1,8 +1,9 @@
-package scripts
+package statement
 
 import events.Event.Events
-import scripts.Instruction.{EXECUTE, GOTO, LABEL, TEST}
-import scripts.Statement.{Block, ChooseVariants, ChooseVariantsOtherwise, Execute, LoopBody, MultiWhenTherefore, MultiWhenThereforeOtherwise, VariantWhenTherefore, WhenTherefore}
+import model.script.Instruction
+import statement.Instruction.{EXECUTE, GOTO, LABEL, TEST}
+import statement.Statement.{Block, ChooseVariants, ChooseVariantsOtherwise, Execute, LoopBody, MultiWhenTherefore, MultiWhenThereforeOtherwise, VariantWhenTherefore, WhenTherefore}
 import value.Value
 import value.basic.BooleanValue
 

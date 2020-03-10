@@ -1,12 +1,13 @@
-package scripts
+package statement
 
-import scripts.Statement.{Block, Choose, Execute, Loop, Variant, When}
+import events.Event.Events
+import statement.Statement.{Block, Choose, Execute, Loop, Variant, When}
 import value.Value
 import value.basic.BooleanValue
 
 object Statements {
-    def execute(): Statement =
-        Execute(Vector.empty)
+    def execute(events: Events): Statement =
+        Execute(events)
     
     def block(statements: Statement*): Statement =
         Block(statements.toVector)

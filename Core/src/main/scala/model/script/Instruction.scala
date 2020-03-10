@@ -1,4 +1,4 @@
-package scripts
+package model.script
 
 import events.Event
 import value.basic.BooleanValue

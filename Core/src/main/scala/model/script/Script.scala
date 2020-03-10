@@ -1,6 +1,7 @@
-package scripts
+package model.script
 
-import scripts.Instruction.{EXIT, GOTO, LABEL}
+import model.script.Instruction.{EXIT, GOTO, LABEL}
+import statement.{Statement, StatementCompiler}
 
 case class Script(instructions: Vector[Instruction]) {
     private val scriptLength = instructions.length

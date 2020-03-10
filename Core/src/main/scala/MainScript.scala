@@ -2,8 +2,8 @@ import _root_.value.Value
 import _root_.value.basic.BooleanValue
 import _root_.value.basic.BooleanValue.BooleanConstant
 import _root_.value.basic.IntValue.IntConstant
-import scripts.Statements._
-import scripts.{Script, Statement}
+import statement.Statements._
+import statement.Statement
 
 object MainScript extends App {
     val condition: BooleanValue = BooleanConstant(false)

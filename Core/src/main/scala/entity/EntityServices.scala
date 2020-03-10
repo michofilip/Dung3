@@ -5,6 +5,7 @@ import model.animation.{Animation, AnimationContainer, Frame}
 import model.physics.{Physics, PhysicsContainer}
 import model.position.PositionMappers.PositionMapper
 import model.position.{Coordinates, Direction, Position, PositionContainer}
+import model.script.Script
 import model.state.StateMappers.StateMapper
 import model.state.{State, StateContainer}
 
@@ -90,6 +91,11 @@ object EntityServices {
         
         def getFrame(timestamp: Timestamp): Option[Frame] =
             entity.animationContainer.map(_.getFrame(timestamp))
+    }
+    
+    implicit class ScriptService(entity: Entity) {
+        def getScript(scriptName: String): Option[Script] =
+            entity.scriptContainerOpt.flatMap(_.getScript(scriptName))
     }
     
 }
