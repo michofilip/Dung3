@@ -1,6 +1,7 @@
 package repository
 
 import entity.Entity
+import entity.EntityServices._
 import model.position.Coordinates
 
 class EntityRepository private(private val entitiesById: Map[Long, Entity],
@@ -9,7 +10,7 @@ class EntityRepository private(private val entitiesById: Map[Long, Entity],
     def +(entity: Entity): EntityRepository = {
         val newEntitiesById = entitiesById + (entity.id -> entity)
         
-        val newEntitiesByCoordinates = entity.positionContainer.map(_.position.coordinates).map(coordinates => {
+        val newEntitiesByCoordinates = entity.getCoordinates.map(coordinates => {
             val newEntitiesAtCoordinates = entitiesByCoordinates.getOrElse(coordinates, Map.empty) + (entity.id -> entity)
             entitiesByCoordinates + (coordinates -> newEntitiesAtCoordinates)
         }).getOrElse(entitiesByCoordinates)
@@ -23,7 +24,7 @@ class EntityRepository private(private val entitiesById: Map[Long, Entity],
     def -(entity: Entity): EntityRepository = {
         val newEntitiesById = entitiesById - entity.id
         
-        val newEntitiesByCoordinates = entity.positionContainer.map(_.position.coordinates).map(coordinates => {
+        val newEntitiesByCoordinates = entity.getCoordinates.map(coordinates => {
             val newEntitiesAtCoordinates = entitiesByCoordinates.getOrElse(coordinates, Map.empty) - entity.id
             if (newEntitiesAtCoordinates.isEmpty) entitiesByCoordinates - coordinates
             else entitiesByCoordinates + (coordinates -> newEntitiesAtCoordinates)
