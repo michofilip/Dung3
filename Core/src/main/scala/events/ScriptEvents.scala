@@ -3,8 +3,8 @@ package events
 import entity.Entity
 import entity.EntityServices._
 import events.Event.{EventResponse, _}
+import model.script.Instruction.{EXECUTE, EXIT, TEST}
 import model.script.Script
-import statement.Instruction.{EXECUTE, EXIT, TEST}
 import world.WorldFrameContext
 
 object ScriptEvents {

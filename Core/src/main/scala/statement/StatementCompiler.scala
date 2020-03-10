@@ -1,8 +1,8 @@
 package statement
 
 import events.Event.Events
-import model.script.Instruction
-import statement.Instruction.{EXECUTE, GOTO, LABEL, TEST}
+import model.script.Instruction.{EXECUTE, EXIT, GOTO, LABEL, TEST}
+import model.script.{Instruction, Script}
 import statement.Statement.{Block, ChooseVariants, ChooseVariantsOtherwise, Execute, LoopBody, MultiWhenTherefore, MultiWhenThereforeOtherwise, VariantWhenTherefore, WhenTherefore}
 import value.Value
 import value.basic.BooleanValue
@@ -11,6 +11,10 @@ import scala.language.implicitConversions
 
 object StatementCompiler {
     implicit private def inst2Vec(instruction: Instruction): Vector[Instruction] = Vector(instruction)
+    
+    def compileToScript(statement: Statement): Script = {
+        Script(compile(statement) :+ EXIT(0))
+    }
     
     def compile(statement: Statement): Vector[Instruction] = {
         val (instructions, _) = compile(statement, Vector.empty, 0)

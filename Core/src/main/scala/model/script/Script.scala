@@ -1,7 +1,6 @@
 package model.script
 
 import model.script.Instruction.{EXIT, GOTO, LABEL}
-import statement.{Statement, StatementCompiler}
 
 case class Script(instructions: Vector[Instruction]) {
     private val scriptLength = instructions.length
@@ -27,8 +26,4 @@ case class Script(instructions: Vector[Instruction]) {
             }
             case instruction => (lineNo, instruction)
         }
-}
-
-object Script {
-    def apply(statement: Statement): Script = Script(StatementCompiler.compile(statement) :+ EXIT(0))
 }
