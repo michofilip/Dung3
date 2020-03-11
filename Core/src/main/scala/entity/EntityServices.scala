@@ -8,6 +8,9 @@ import model.position.{Coordinates, Direction, Position, PositionContainer}
 import model.script.{Script, ScriptContainer}
 import model.state.StateMappers.StateMapper
 import model.state.{State, StateContainer}
+import model.value.ValueContainer
+import value.Value
+import value.basic.{BooleanValue, ByteValue, CharValue, DoubleValue, FloatValue, IntValue, LongValue, ShortValue, StringValue}
 
 object EntityServices {
     
@@ -91,6 +94,41 @@ object EntityServices {
         
         def getFrame(timestamp: Timestamp): Option[Frame] =
             entity.animationContainerOpt.map(_.getFrame(timestamp))
+    }
+    
+    implicit class ValueService(entity: Entity) {
+        def setValueContainer(valueContainerOpt: Option[ValueContainer]): Entity =
+            entity.copy(valueContainerOpt = valueContainerOpt)
+        
+        def getValue(name: String): Option[Value] =
+            entity.valueContainerOpt.map(_.getValue(name))
+        
+        def getBooleanValue(name: String): Option[BooleanValue] =
+            entity.valueContainerOpt.map(_.getBooleanValue(name))
+        
+        def getByteValue(name: String): Option[ByteValue] =
+            entity.valueContainerOpt.map(_.getByteValue(name))
+        
+        def getShortValue(name: String): Option[ShortValue] =
+            entity.valueContainerOpt.map(_.getShortValue(name))
+        
+        def getIntValue(name: String): Option[IntValue] =
+            entity.valueContainerOpt.map(_.getIntValue(name))
+        
+        def getLongValue(name: String): Option[LongValue] =
+            entity.valueContainerOpt.map(_.getLongValue(name))
+        
+        def getFloatValue(name: String): Option[FloatValue] =
+            entity.valueContainerOpt.map(_.getFloatValue(name))
+        
+        def getDoubleValue(name: String): Option[DoubleValue] =
+            entity.valueContainerOpt.map(_.getDoubleValue(name))
+        
+        def getCharValue(name: String): Option[CharValue] =
+            entity.valueContainerOpt.map(_.getCharValue(name))
+        
+        def getStringValue(name: String): Option[StringValue] =
+            entity.valueContainerOpt.map(_.getStringValue(name))
     }
     
     implicit class ScriptService(entity: Entity) {
