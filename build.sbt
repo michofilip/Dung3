@@ -13,7 +13,7 @@ lazy val Commons = project
         )
 
 lazy val Core = project
-        .dependsOn(Commons, Value)
+        .dependsOn(Commons, Value, Parts)
         .settings(
             commonSettings,
             libraryDependencies ++= Dependencies.coreDependencies
@@ -24,4 +24,11 @@ lazy val Value = project
         .settings(
             commonSettings,
             libraryDependencies ++= Dependencies.valueDependencies
+        )
+
+lazy val Parts = project
+        .dependsOn(Commons)
+        .settings(
+            commonSettings,
+            libraryDependencies ++= Dependencies.partsDependencies
         )

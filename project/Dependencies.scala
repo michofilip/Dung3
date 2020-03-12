@@ -13,4 +13,5 @@ object Dependencies {
     val coreDependencies: Seq[ModuleID] = commonDependencies
     val valueDependencies: Seq[ModuleID] = commonDependencies
     val commonsDependencies: Seq[ModuleID] = commonDependencies
+    val partsDependencies: Seq[ModuleID] = commonDependencies
 }
