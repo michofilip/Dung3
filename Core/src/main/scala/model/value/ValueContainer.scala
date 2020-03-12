@@ -13,6 +13,12 @@ import value.basic.StringValue.StringNull
 import value.basic.{BooleanValue, ByteValue, CharValue, DoubleValue, FloatValue, IntValue, LongValue, NullValue, ShortValue, StringValue}
 
 case class ValueContainer(values: Map[String, Value]) {
+    def setValue(name: String, value: Value): ValueContainer =
+        ValueContainer(values + (name -> value))
+    
+    def removeValue(name: String): ValueContainer =
+        ValueContainer(values - name)
+    
     def getValue(name: String): Value =
         values.getOrElse(name, NullValue)
     
