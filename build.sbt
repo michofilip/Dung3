@@ -7,21 +7,28 @@ lazy val commonSettings = Seq(
 )
 
 lazy val Commons = project
-        .settings(
-            commonSettings,
-            libraryDependencies ++= Dependencies.commonsDependencies
-        )
+    .settings(
+        commonSettings,
+        libraryDependencies ++= Dependencies.commonsDependencies
+    )
 
 lazy val Core = project
-        .dependsOn(Commons, Value)
-        .settings(
-            commonSettings,
-            libraryDependencies ++= Dependencies.coreDependencies
-        )
+    .dependsOn(Commons, Value)
+    .settings(
+        commonSettings,
+        libraryDependencies ++= Dependencies.coreDependencies
+    )
 
 lazy val Value = project
-        .dependsOn(Commons)
-        .settings(
-            commonSettings,
-            libraryDependencies ++= Dependencies.valueDependencies
-        )
+    .dependsOn(Commons)
+    .settings(
+        commonSettings,
+        libraryDependencies ++= Dependencies.valueDependencies
+    )
+
+lazy val Game = project
+    .dependsOn(Commons, Value)
+    .settings(
+        commonSettings,
+        libraryDependencies ++= Dependencies.gameDependencies
+    )

@@ -6,6 +6,7 @@ object Dependencies {
     
     private val commonDependencies: Seq[ModuleID] = Seq(scalaTest % Test)
     
+    val gameDependencies: Seq[ModuleID] = commonDependencies
     val coreDependencies: Seq[ModuleID] = commonDependencies
     val valueDependencies: Seq[ModuleID] = commonDependencies
     val commonsDependencies: Seq[ModuleID] = commonDependencies
