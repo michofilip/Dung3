@@ -1,10 +1,10 @@
 package engine.value.basic
 
 import engine.value.Value
-import engine.value.ValueTypes.{Provider, Unary}
+import engine.value.ValueTypes.{Binary, Provider, Unary}
 import engine.value.basic.IntValue.IntUnaryOperatorValue
 import engine.value.operators.BasicOperators
-import engine.value.traits.{NumericValue, ProviderValue, UnaryOperatorValue}
+import engine.value.traits.{BinaryOperatorValue, NumericValue, ProviderValue, UnaryOperatorValue}
 
 sealed abstract class StringValue extends Value[String] {
     def +(that: StringValue): StringValue = StringValue.StringConcatenate(this, that)

@@ -1,9 +1,9 @@
 package engine.value.basic
 
 import engine.value.Value
-import engine.value.ValueTypes.{Comparator, Provider, Unary}
+import engine.value.ValueTypes.{Binary, Comparator, Provider, Unary}
 import engine.value.operators.BasicOperators
-import engine.value.traits.{ComparableValue, NumericValue, ProviderValue, UnaryOperatorValue}
+import engine.value.traits.{BinaryOperatorValue, ComparableValue, NumericValue, ProviderValue, UnaryOperatorValue}
 
 sealed abstract class IntValue extends Value[Int] with ComparableValue[Int] with NumericValue[Int] {
     override val comparator: Comparator[Int] = BasicOperators.intComparator

@@ -3,7 +3,7 @@ package engine.value.basic
 import engine.value.Value
 import engine.value.ValueTypes.{Binary, Comparator, Provider, Unary}
 import engine.value.operators.BasicOperators
-import engine.value.traits.{ComparableValue, NumericValue, ProviderValue, UnaryOperatorValue}
+import engine.value.traits.{BinaryOperatorValue, ComparableValue, NumericValue, ProviderValue, UnaryOperatorValue}
 
 sealed abstract class LongValue extends Value[Long] with ComparableValue[Long] with NumericValue[Long] {
     override val comparator: Comparator[Long] = BasicOperators.longComparator
