@@ -12,11 +12,11 @@ sealed abstract class BooleanValue extends Value[Boolean] {
 
     def ||(that: BooleanValue): BooleanValue = BooleanValue.OR(this, that)
 
-    def &!&(that: BooleanValue): BooleanValue = BooleanValue.NAND(this, that)
+    def !&&(that: BooleanValue): BooleanValue = BooleanValue.NAND(this, that)
 
-    def |!|(that: BooleanValue): BooleanValue = BooleanValue.NOR(this, that)
+    def !||(that: BooleanValue): BooleanValue = BooleanValue.NOR(this, that)
 
-    def >=<(that: BooleanValue): BooleanValue = BooleanValue.XOR(this, that)
+    def ><(that: BooleanValue): BooleanValue = BooleanValue.XOR(this, that)
 
     def <=>(that: BooleanValue): BooleanValue = BooleanValue.XNOR(this, that)
 }
