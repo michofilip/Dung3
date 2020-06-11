@@ -32,3 +32,15 @@ lazy val Game = project
         commonSettings,
         libraryDependencies ++= Dependencies.gameDependencies
     )
+    .dependsOn(Commons)
+    .settings(
+        commonSettings,
+        libraryDependencies ++= Dependencies.valueDependencies
+    )
+
+lazy val Value2 = project
+    .dependsOn(Commons)
+    .settings(
+        commonSettings,
+        libraryDependencies ++= Dependencies.valueDependencies
+    )
