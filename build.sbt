@@ -6,26 +6,6 @@ lazy val commonSettings = Seq(
     scalaVersion := "2.13.2"
 )
 
-lazy val Commons = project
-    .settings(
-        commonSettings,
-        libraryDependencies ++= Dependencies.commonsDependencies
-    )
-
-lazy val Core = project
-    .dependsOn(Commons, Value)
-    .settings(
-        commonSettings,
-        libraryDependencies ++= Dependencies.coreDependencies
-    )
-
-lazy val Value = project
-    .dependsOn(Commons)
-    .settings(
-        commonSettings,
-        libraryDependencies ++= Dependencies.valueDependencies
-    )
-
 lazy val Game = project
     .settings(
         commonSettings,
