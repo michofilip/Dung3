@@ -1,11 +1,12 @@
 package engine.value
 
+import engine.GameContext
 import engine.value.basic.{BooleanValue, ByteValue, CharValue, DoubleValue, FloatValue, IntValue, LongValue, ShortValue, StringValue}
 
 abstract class Value[V] {
-    def get(implicit gameContext: ValueContext): Option[V]
+    def get(implicit gameContext: GameContext): Option[V]
 
-    def getOrElse(default: => V)(implicit gameContext: ValueContext): V =
+    def getOrElse(default: => V)(implicit gameContext: GameContext): V =
         get.getOrElse(default)
 
     def ===[W](that: Value[W]): BooleanValue = BooleanValue.Equals(this, that)
