@@ -95,6 +95,7 @@ object EntityServices {
             entity.animationContainerOpt.map(_.getFrame(timestamp))
     }
 
+    //todo rethink this
     implicit class ValueService(entity: Entity) {
         def setValueContainer(valueContainerOpt: Option[ValueContainer]): Entity =
             entity.copy(valueContainerOpt = valueContainerOpt)
