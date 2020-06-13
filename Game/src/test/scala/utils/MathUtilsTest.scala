@@ -1,6 +1,6 @@
 package utils
 
-import commons.utils.MathUtils._
+import engine.utils.MathUtils._
 import org.scalatest.funsuite.AnyFunSuite
 
 class MathUtilsTest extends AnyFunSuite {

@@ -1,6 +1,6 @@
 package engine.entity.parts.script
 
-import value.basic.BooleanValue
+import engine.value.basic.BooleanValue
 
 sealed abstract class Instruction
 

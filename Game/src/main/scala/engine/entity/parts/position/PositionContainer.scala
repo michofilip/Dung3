@@ -1,7 +1,7 @@
 package engine.entity.parts.position
 
-import commons.temporal.Timestamp
 import engine.entity.parts.position.PositionMappers.PositionMapper
+import engine.temporal.Timestamp
 
 case class PositionContainer(position: Position, positionTimestamp: Timestamp)
 

@@ -1,8 +1,8 @@
 package engine.entity.parts.animation
 
-import commons.temporal.Duration
-import commons.temporal.Duration._
-import commons.utils.MathUtils.{MathUtilsImplicits, floor}
+import engine.temporal.Duration
+import engine.temporal.Duration._
+import engine.utils.MathUtils._
 
 sealed abstract class Animation {
     val length: Int

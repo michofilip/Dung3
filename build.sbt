@@ -27,7 +27,6 @@ lazy val Value = project
     )
 
 lazy val Game = project
-    .dependsOn(Commons, Value)
     .settings(
         commonSettings,
         libraryDependencies ++= Dependencies.gameDependencies

@@ -1,8 +1,8 @@
 package engine.entity.parts.animation
 
-import commons.temporal.Timestamp
 import engine.entity.parts.position.Direction
 import engine.entity.parts.state.State
+import engine.temporal.Timestamp
 
 case class AnimationContainer(animation: Animation, animationSelector: AnimationSelector, animationTimestamp: Timestamp) {
     def getFrame(timestamp: Timestamp): Frame =

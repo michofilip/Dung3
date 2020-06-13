@@ -1,7 +1,7 @@
 package engine.entity.parts.state
 
-import commons.temporal.Timestamp
 import engine.entity.parts.state.StateMappers.StateMapper
+import engine.temporal.Timestamp
 
 case class StateContainer(state: State, stateTimestamp: Timestamp)
 

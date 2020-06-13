@@ -1,6 +1,6 @@
 package utils
 
-import commons.utils.FunctionUtils._
+import engine.utils.FunctionUtils._
 import org.scalatest.funsuite.AnyFunSuite
 
 class FunctionUtilsTest extends AnyFunSuite {
