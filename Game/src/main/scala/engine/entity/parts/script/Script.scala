@@ -5,12 +5,10 @@ import engine.entity.parts.script.Instruction.{EXIT, GOTO, LABEL}
 case class Script(instructions: Vector[Instruction]) {
     private val scriptLength = instructions.length
 
-    // todo do it better
     private val labelMap: Map[Int, Int] =
-        instructions.zipWithIndex.foldLeft(Map.empty[Int, Int]) {
-            case (labelMap, (LABEL(labelId), lineNo)) => labelMap + (labelId -> lineNo)
-            case (labelMap, _) => labelMap
-        }
+        instructions.zipWithIndex.collect {
+            case (LABEL(labelId), lineNo) => labelId -> lineNo
+        }.toMap
 
     private def getInstruction(lineNo: Int): Instruction =
         if (0 <= lineNo && lineNo < scriptLength)
