@@ -16,9 +16,9 @@ class GameService {
         val (newEntities, newEvents) = allEvents.foldLeft(gameContext.entities, Vector.empty[Event]) {
             case ((entities, events), event) => entities.getById(event.entityId).map(
                 entity => {
-                    val (resultEntities, resultEvents) = event.applyTo(entity)
-                    val newEntityRepository = entities - entity ++ resultEntities
-                    val newEvents = events ++ resultEvents
+                    val eventResponse = event.applyTo(entity)
+                    val newEntityRepository = entities - entity ++ eventResponse.entities
+                    val newEvents = events ++ eventResponse.events
                     (newEntityRepository, newEvents)
                 }
             ).getOrElse((entities, events))
