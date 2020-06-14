@@ -14,10 +14,8 @@ object ScriptEvents {
                 .withEntity(entity)
                 .withEvents {
                     entity.getScript(scriptName) match {
-                        case Some(script) =>
-                            Vector(ExecuteScriptLine(entityId, script, 0))
-                        case None =>
-                            Vector.empty
+                        case Some(script) => Vector(ExecuteScriptLine(entityId, script, 0))
+                        case None => Vector.empty
                     }
                 }
         }
@@ -29,20 +27,14 @@ object ScriptEvents {
                 .withEntity(entity)
                 .withEvents {
                     script.getNext(lineNo) match {
-                        case (_, EXIT(_)) =>
-                            Vector.empty
-                        case (nextLinNo, EXECUTE(events)) =>
-                            events :+ ExecuteScriptLine(entityId, script, nextLinNo + 1)
+                        case (_, EXIT(_)) => Vector.empty
+                        case (nextLinNo, EXECUTE(events)) => events :+ ExecuteScriptLine(entityId, script, nextLinNo + 1)
                         case (nextLinNo, TEST(condition)) => condition.get match {
-                            case Some(true) =>
-                                Vector(ExecuteScriptLine(entityId, script, nextLinNo + 2))
-                            case Some(false) =>
-                                Vector(ExecuteScriptLine(entityId, script, nextLinNo + 1))
-                            case None =>
-                                Vector.empty
+                            case Some(true) => Vector(ExecuteScriptLine(entityId, script, nextLinNo + 2))
+                            case Some(false) => Vector(ExecuteScriptLine(entityId, script, nextLinNo + 1))
+                            case None => Vector.empty
                         }
-                        case _ =>
-                            Vector.empty
+                        case _ => Vector.empty
                     }
                 }
         }
