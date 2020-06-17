@@ -2,7 +2,7 @@ package engine.statement
 
 import engine.entity.parts.script.Instruction.{EXECUTE, EXIT, GOTO, LABEL, TEST}
 import engine.entity.parts.script.{Instruction, Script}
-import engine.events.Event.Events
+import engine.events.Event
 import engine.statement.Statement.{Block, ChooseVariants, ChooseVariantsOtherwise, Execute, LoopBody, MultiWhenTherefore, MultiWhenThereforeOtherwise, VariantWhenTherefore, WhenTherefore}
 import engine.value.Value
 import engine.value.basic.BooleanValue
@@ -40,8 +40,9 @@ object StatementCompiler {
         }
     }
 
-    private def compileExecute(events: Events,
-                               instructions: Vector[Instruction], labelId: Int): (Vector[Instruction], Int) = {
+    private def compileExecute(events: Vector[Event],
+                               instructions: Vector[Instruction],
+                               labelId: Int): (Vector[Instruction], Int) = {
         (instructions :+ EXECUTE(events), labelId)
     }
 
