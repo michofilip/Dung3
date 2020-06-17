@@ -14,13 +14,15 @@ object PositionEvents {
 
     final case class MoveTo(override val entityId: Long, x: Int, y: Int) extends Event {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
-            entity.updatePosition(PositionMappers.moveTo(x, y), gc.timestamp)
+            val responseEntity = entity.updatePosition(PositionMappers.moveTo(x, y), gc.timestamp)
+            (Vector(responseEntity), Vector.empty)
         }
     }
 
     final case class MoveBy(override val entityId: Long, dx: Int, dy: Int) extends Event {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
-            entity.updatePosition(PositionMappers.moveBy(dx, dy), gc.timestamp)
+            val responseEntity = entity.updatePosition(PositionMappers.moveBy(dx, dy), gc.timestamp)
+            (Vector(responseEntity), Vector.empty)
         }
     }
 
@@ -36,22 +38,25 @@ object PositionEvents {
             }
 
             val responseEvent = entity.getAnimationDuration match {
-                case Some(duration) if duration > Duration.zero => ControlEvents.DelayTime(entityId, duration, FinishMovement(entityId))
+                case Some(duration) if duration > Duration.zero =>
+                    ControlEvents.DelayTime(entityId, duration, Vector(FinishMovement(entityId)))
                 case _ => FinishMovement(entityId)
             }
 
-            (responseEntity, responseEvent)
+            (Vector(responseEntity), Vector(responseEvent))
         }
     }
 
     final case class FinishMovement(override val entityId: Long) extends Event {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
-            entity.getState match {
+            val responseEntity = entity.getState match {
                 case Some(State.Walking) => entity
                     .updateState(movement, gc.timestamp)
                     .updateAnimation()
                 case _ => entity
             }
+
+            (Vector(responseEntity), Vector.empty)
         }
     }
 

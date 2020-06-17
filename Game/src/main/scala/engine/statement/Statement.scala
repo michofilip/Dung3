@@ -1,6 +1,6 @@
 package engine.statement
 
-import engine.events.Event.Events
+import engine.events.Event
 import engine.value.Value
 import engine.value.basic.BooleanValue
 
@@ -8,7 +8,7 @@ sealed abstract class Statement
 
 object Statement {
 
-    final case class Execute(events: Events) extends Statement
+    final case class Execute(events: Vector[Event]) extends Statement
 
     final case class Block(statements: Vector[Statement]) extends Statement
 
