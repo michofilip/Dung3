@@ -1,7 +1,6 @@
 package engine
 
 import engine.events.Event
-import engine.events.Event.Events
 import engine.temporal.Timestamp
 
 class GameService {
@@ -9,7 +8,7 @@ class GameService {
     def nextTurn(implicit gameContext: GameContext): GameContext =
         gameContext.copy(turn = gameContext.turn + 1)
 
-    def nextFrame(externalEvents: Events, timestamp: Timestamp)
+    def nextFrame(externalEvents: Vector[Event], timestamp: Timestamp)
                  (implicit gameContext: GameContext): GameContext = {
 
         val allEvents = gameContext.events ++ externalEvents
