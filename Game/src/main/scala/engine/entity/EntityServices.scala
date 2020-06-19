@@ -9,6 +9,7 @@ import engine.entity.parts.state.StateMappers.StateMapper
 import engine.entity.parts.state.{State, StateContainer}
 import engine.entity.parts.value.ValueContainer
 import engine.temporal.{Duration, Timestamp}
+import engine.value.Value
 import engine.value.basic.{BooleanValue, ByteValue, CharValue, DoubleValue, FloatValue, IntValue, LongValue, ShortValue, StringValue}
 
 object EntityServices {
@@ -95,10 +96,21 @@ object EntityServices {
             entity.animationContainerOpt.map(_.getFrame(timestamp))
     }
 
-    //todo rethink this
     implicit class ValueService(entity: Entity) {
         def setValueContainer(valueContainerOpt: Option[ValueContainer]): Entity =
             entity.copy(valueContainerOpt = valueContainerOpt)
+
+        def setValue(name: String, value: Value[_]): Entity =
+            entity.valueContainerOpt match {
+                case Some(valueContainer) => setValueContainer(Some(valueContainer.setValue(name, value)))
+                case None => entity
+            }
+
+        def removeValue(name: String): Entity =
+            entity.valueContainerOpt match {
+                case Some(valueContainer) => setValueContainer(Some(valueContainer.removeValue(name)))
+                case None => entity
+            }
 
         def getBooleanValue(name: String): Option[BooleanValue] =
             entity.valueContainerOpt.map(_.getBooleanValue(name))
