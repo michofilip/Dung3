@@ -2,10 +2,10 @@ package engine.entity.parts.state
 
 import engine.entity.parts.state.State.{Standing, Walking}
 
-object StateTransformer {
-    type StateTransformer = State => State
+trait StateTransformer extends (State => State)
 
-    val movementStateTransformer: StateTransformer = {
+object StateTransformer {
+    def movementStateTransformer: StateTransformer = {
         case state: State.MovementState => state match {
             case State.Standing => Walking
             case State.Walking => Standing

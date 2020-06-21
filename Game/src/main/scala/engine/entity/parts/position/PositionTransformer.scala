@@ -1,17 +1,18 @@
 package engine.entity.parts.position
 
-object PositionMappers {
-    type PositionMapper = Position => Position
-    
-    def moveTo(x: Int, y: Int): PositionMapper = {
+trait PositionTransformer extends (Position => Position)
+
+object PositionTransformer {
+
+    def moveTo(x: Int, y: Int): PositionTransformer = {
         case Position(_, direction) => Position(Coordinates(x, y), direction)
     }
-    
-    def moveBy(dx: Int, dy: Int): PositionMapper = {
+
+    def moveBy(dx: Int, dy: Int): PositionTransformer = {
         case Position(coordinates, direction) => Position(coordinates.shift(dx, dy), direction)
     }
-    
-    def step(direction: Direction): PositionMapper = direction match {
+
+    def step(direction: Direction): PositionTransformer = direction match {
         case Direction.North => moveBy(0, -1)
         case Direction.NorthEast => moveBy(1, -1)
         case Direction.East => moveBy(1, 0)
@@ -21,28 +22,28 @@ object PositionMappers {
         case Direction.West => moveBy(-1, 0)
         case Direction.NorthWest => moveBy(-1, -1)
     }
-    
-    def rotateTo(direction: Direction): PositionMapper = {
+
+    def rotateTo(direction: Direction): PositionTransformer = {
         case Position(coordinates, _) => Position(coordinates, direction)
     }
-    
-    def rotateRight45(): PositionMapper = {
+
+    def rotateRight45(): PositionTransformer = {
         case Position(coordinates, direction) => Position(coordinates, direction.right)
     }
-    
-    def rotateRight90(): PositionMapper = {
+
+    def rotateRight90(): PositionTransformer = {
         case Position(coordinates, direction) => Position(coordinates, direction.right.right)
     }
-    
-    def rotateLeft45(): PositionMapper = {
+
+    def rotateLeft45(): PositionTransformer = {
         case Position(coordinates, direction) => Position(coordinates, direction.left)
     }
-    
-    def rotateLeft90(): PositionMapper = {
+
+    def rotateLeft90(): PositionTransformer = {
         case Position(coordinates, direction) => Position(coordinates, direction.left.left)
     }
-    
-    def rotate180(): PositionMapper = {
+
+    def rotate180(): PositionTransformer = {
         case Position(coordinates, direction) => Position(coordinates, direction.opposite)
     }
 }

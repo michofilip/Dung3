@@ -2,11 +2,9 @@ package engine.entity
 
 import engine.entity.parts.animation.{Animation, AnimationContainer, Frame}
 import engine.entity.parts.physics.{Physics, PhysicsContainer}
-import engine.entity.parts.position.PositionMappers.PositionMapper
-import engine.entity.parts.position.{Coordinates, Direction, Position, PositionContainer}
+import engine.entity.parts.position.{Coordinates, Direction, Position, PositionContainer, PositionTransformer}
 import engine.entity.parts.script.{Script, ScriptContainer}
-import engine.entity.parts.state.StateTransformer.StateTransformer
-import engine.entity.parts.state.{State, StateContainer}
+import engine.entity.parts.state.{State, StateContainer, StateTransformer}
 import engine.entity.parts.value.ValueContainer
 import engine.temporal.{Duration, Timestamp}
 import engine.value.Value
@@ -32,7 +30,7 @@ object EntityServices {
         def setPositionContainerOpt(positionContainerOpt: Option[PositionContainer]): Entity =
             entity.copy(positionContainerOpt = positionContainerOpt)
 
-        def updatePosition(positionMapper: PositionMapper, timestamp: Timestamp): Entity =
+        def updatePosition(positionMapper: PositionTransformer, timestamp: Timestamp): Entity =
             entity.setPositionContainerOpt(entity.positionContainerOpt.map(PositionContainer.update(positionMapper, timestamp)))
 
         def getPosition: Option[Position] =

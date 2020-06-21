@@ -1,6 +1,5 @@
 package engine.entity.parts.state
 
-import engine.entity.parts.state.StateTransformer.StateTransformer
 import engine.temporal.Timestamp
 
 case class StateContainer(state: State, stateTimestamp: Timestamp)
