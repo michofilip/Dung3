@@ -5,7 +5,7 @@ import engine.entity.parts.physics.{Physics, PhysicsContainer}
 import engine.entity.parts.position.PositionMappers.PositionMapper
 import engine.entity.parts.position.{Coordinates, Direction, Position, PositionContainer}
 import engine.entity.parts.script.{Script, ScriptContainer}
-import engine.entity.parts.state.StateMappers.StateMapper
+import engine.entity.parts.state.StateTransformer.StateTransformer
 import engine.entity.parts.state.{State, StateContainer}
 import engine.entity.parts.value.ValueContainer
 import engine.temporal.{Duration, Timestamp}
@@ -18,7 +18,7 @@ object EntityServices {
         def setStateContainerOpt(stateContainerOpt: Option[StateContainer]): Entity =
             entity.copy(stateContainerOpt = stateContainerOpt)
 
-        def updateState(stateMapper: StateMapper, timestamp: Timestamp): Entity =
+        def updateState(stateMapper: StateTransformer, timestamp: Timestamp): Entity =
             entity.setStateContainerOpt(entity.stateContainerOpt.map(StateContainer.update(stateMapper, timestamp)))
 
         def getState: Option[State] =
