@@ -1,5 +1,6 @@
 package engine.entity
 
+import engine.GameContext
 import engine.entity.parts.animation.{Animation, AnimationContainer, Frame}
 import engine.entity.parts.physics.{Physics, PhysicsContainer}
 import engine.entity.parts.position.{Coordinates, Direction, Position, PositionContainer, PositionTransformer}
@@ -16,8 +17,8 @@ object EntityServices {
         def setStateContainerOpt(stateContainerOpt: Option[StateContainer]): Entity =
             entity.copy(stateContainerOpt = stateContainerOpt)
 
-        def updateState(stateMapper: StateTransformer, timestamp: Timestamp): Entity =
-            entity.setStateContainerOpt(entity.stateContainerOpt.map(StateContainer.update(stateMapper, timestamp)))
+        def updateState(stateMapper: StateTransformer)(implicit gc: GameContext): Entity =
+            entity.setStateContainerOpt(entity.stateContainerOpt.map(StateContainer.update(stateMapper, gc.timestamp)))
 
         def getState: Option[State] =
             entity.stateContainerOpt.map(_.state)
@@ -30,8 +31,8 @@ object EntityServices {
         def setPositionContainerOpt(positionContainerOpt: Option[PositionContainer]): Entity =
             entity.copy(positionContainerOpt = positionContainerOpt)
 
-        def updatePosition(positionMapper: PositionTransformer, timestamp: Timestamp): Entity =
-            entity.setPositionContainerOpt(entity.positionContainerOpt.map(PositionContainer.update(positionMapper, timestamp)))
+        def updatePosition(positionMapper: PositionTransformer)(implicit gc: GameContext): Entity =
+            entity.setPositionContainerOpt(entity.positionContainerOpt.map(PositionContainer.update(positionMapper, gc.timestamp)))
 
         def getPosition: Option[Position] =
             entity.positionContainerOpt.map(_.position)

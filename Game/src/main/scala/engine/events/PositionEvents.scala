@@ -12,14 +12,14 @@ object PositionEvents {
 
     final case class MoveTo(override val entityId: Long, x: Int, y: Int) extends Event {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
-            val responseEntity = entity.updatePosition(PositionTransformer.moveTo(x, y), gc.timestamp)
+            val responseEntity = entity.updatePosition(PositionTransformer.moveTo(x, y))
             (Vector(responseEntity), Vector.empty)
         }
     }
 
     final case class MoveBy(override val entityId: Long, dx: Int, dy: Int) extends Event {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
-            val responseEntity = entity.updatePosition(PositionTransformer.moveBy(dx, dy), gc.timestamp)
+            val responseEntity = entity.updatePosition(PositionTransformer.moveBy(dx, dy))
             (Vector(responseEntity), Vector.empty)
         }
     }
@@ -29,8 +29,8 @@ object PositionEvents {
 
             val responseEntity = entity.getState match {
                 case Some(State.Standing) => entity
-                    .updatePosition(PositionTransformer.rotateTo(direction) andThen PositionTransformer.step(direction), gc.timestamp)
-                    .updateState(StateTransformer.movementStateTransformer, gc.timestamp)
+                    .updatePosition(PositionTransformer.rotateTo(direction) andThen PositionTransformer.step(direction))
+                    .updateState(StateTransformer.movementStateTransformer)
                     .updateAnimation()
                 case _ => entity
             }
@@ -49,7 +49,7 @@ object PositionEvents {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
             val responseEntity = entity.getState match {
                 case Some(State.Walking) => entity
-                    .updateState(StateTransformer.movementStateTransformer, gc.timestamp)
+                    .updateState(StateTransformer.movementStateTransformer)
                     .updateAnimation()
                 case _ => entity
             }
