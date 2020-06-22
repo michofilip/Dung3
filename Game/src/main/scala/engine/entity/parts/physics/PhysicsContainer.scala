@@ -6,12 +6,12 @@ case class PhysicsContainer(physics: Physics, physicsSelector: PhysicsSelector)
 
 object PhysicsContainer {
     
-    def initialise(stateOpt: Option[State])(physicsSelector: PhysicsSelector): Option[PhysicsContainer] =
-        physicsSelector.select(stateOpt)
+    def initialise(state: Option[State])(physicsSelector: PhysicsSelector): Option[PhysicsContainer] =
+        physicsSelector.select(state)
                 .map(physics => PhysicsContainer(physics, physicsSelector))
     
-    def update(stateOpt: Option[State])(physicsContainer: PhysicsContainer): PhysicsContainer =
-        physicsContainer.physicsSelector.select(stateOpt)
+    def update(state: Option[State])(physicsContainer: PhysicsContainer): PhysicsContainer =
+        physicsContainer.physicsSelector.select(state)
                 .map(physics => physicsContainer.copy(physics = physics))
                 .getOrElse(physicsContainer)
     

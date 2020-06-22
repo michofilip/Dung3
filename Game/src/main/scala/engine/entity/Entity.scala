@@ -10,9 +10,9 @@ import engine.entity.parts.value.ValueContainer
 import engine.temporal.Timestamp
 
 case class Entity(id: Long, nameKey: NameKey, initialTimestamp: Timestamp,
-                  stateContainerOpt: Option[StateContainer] = None,
-                  positionContainerOpt: Option[PositionContainer] = None,
-                  physicsContainerOpt: Option[PhysicsContainer] = None,
-                  animationContainerOpt: Option[AnimationContainer] = None,
-                  valueContainerOpt: Option[ValueContainer] = None,
-                  scriptContainerOpt: Option[ScriptContainer] = None)
+                  stateContainer: Option[StateContainer] = None,
+                  positionContainer: Option[PositionContainer] = None,
+                  physicsContainer: Option[PhysicsContainer] = None,
+                  animationContainer: Option[AnimationContainer] = None,
+                  valueContainer: Option[ValueContainer] = None,
+                  scriptContainer: Option[ScriptContainer] = None)

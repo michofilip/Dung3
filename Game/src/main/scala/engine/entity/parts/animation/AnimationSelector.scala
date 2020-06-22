@@ -4,8 +4,8 @@ import engine.entity.parts.position.Direction
 import engine.entity.parts.state.State
 
 case class AnimationSelector(animations: Map[(Option[State], Option[Direction]), Animation]) {
-    def select(stateOpt: Option[State], directionOpt: Option[Direction]): Option[Animation] =
-        animations.get((stateOpt, directionOpt))
+    def select(state: Option[State], direction: Option[Direction]): Option[Animation] =
+        animations.get((state, direction))
 }
 
 object AnimationSelector {
