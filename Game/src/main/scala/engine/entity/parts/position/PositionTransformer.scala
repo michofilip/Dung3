@@ -1,6 +1,10 @@
 package engine.entity.parts.position
 
-trait PositionTransformer extends (Position => Position)
+trait PositionTransformer extends (Position => Position) {
+    def andThen(positionTransformer: PositionTransformer): PositionTransformer = {
+        (position: Position) => positionTransformer.apply(this.apply(position))
+    }
+}
 
 object PositionTransformer {
 

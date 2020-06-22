@@ -3,10 +3,8 @@ package engine.events
 import engine.GameContext
 import engine.entity.Entity
 import engine.entity.EntityServices._
-import engine.entity.parts.position.PositionTransformer._
 import engine.entity.parts.position.{Direction, PositionTransformer}
-import engine.entity.parts.state.State
-import engine.entity.parts.state.StateTransformer._
+import engine.entity.parts.state.{State, StateTransformer}
 import engine.events.Event._
 import engine.temporal.Duration
 
@@ -31,9 +29,8 @@ object PositionEvents {
 
             val responseEntity = entity.getState match {
                 case Some(State.Standing) => entity
-                    .updatePosition(step(direction), gc.timestamp)
-                    .updatePosition(rotateTo(direction), gc.timestamp)
-                    .updateState(movementStateTransformer, gc.timestamp)
+                    .updatePosition(PositionTransformer.rotateTo(direction) andThen PositionTransformer.step(direction), gc.timestamp)
+                    .updateState(StateTransformer.movementStateTransformer, gc.timestamp)
                     .updateAnimation()
                 case _ => entity
             }
@@ -52,7 +49,7 @@ object PositionEvents {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
             val responseEntity = entity.getState match {
                 case Some(State.Walking) => entity
-                    .updateState(movementStateTransformer, gc.timestamp)
+                    .updateState(StateTransformer.movementStateTransformer, gc.timestamp)
                     .updateAnimation()
                 case _ => entity
             }
