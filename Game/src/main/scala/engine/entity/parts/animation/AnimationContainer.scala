@@ -11,14 +11,14 @@ case class AnimationContainer(animation: Animation, animationSelector: Animation
 
 object AnimationContainer {
 
-    def initialize(stateOpt: Option[State], directionOpt: Option[Direction], animationTimestamp: Timestamp)
+    def initialize(state: Option[State], direction: Option[Direction], animationTimestamp: Timestamp)
                   (animationSelector: AnimationSelector): Option[AnimationContainer] =
-        animationSelector.select(stateOpt, directionOpt)
+        animationSelector.select(state, direction)
             .map(animation => AnimationContainer(animation, animationSelector, animationTimestamp))
 
-    def selectAnimationFor(stateOpt: Option[State], directionOpt: Option[Direction], animationTimestamp: Timestamp)
+    def selectAnimationFor(state: Option[State], direction: Option[Direction], animationTimestamp: Timestamp)
                           (animationContainer: AnimationContainer): AnimationContainer =
-        animationContainer.animationSelector.select(stateOpt, directionOpt)
+        animationContainer.animationSelector.select(state, direction)
             .map(animation => animationContainer.copy(animation = animation, animationTimestamp = animationTimestamp))
             .getOrElse(animationContainer)
 }

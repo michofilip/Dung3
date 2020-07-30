@@ -24,10 +24,10 @@ object ScriptEvents {
         override def applyTo(entity: Entity)(implicit gc: GameContext): EventResponse = {
             val responseEvents = script.getNext(lineNo) match {
                 case (_, EXIT(_)) => Vector.empty
-                case (nextLinNo, EXECUTE(events)) => events :+ ExecuteScriptLine(entityId, script, nextLinNo + 1)
-                case (nextLinNo, TEST(condition)) => condition.get match {
-                    case Some(true) => Vector(ExecuteScriptLine(entityId, script, nextLinNo + 2))
-                    case Some(false) => Vector(ExecuteScriptLine(entityId, script, nextLinNo + 1))
+                case (nextLineNo, EXECUTE(events)) => events :+ ExecuteScriptLine(entityId, script, nextLineNo + 1)
+                case (nextLineNo, TEST(condition)) => condition.get match {
+                    case Some(true) => Vector(ExecuteScriptLine(entityId, script, nextLineNo + 2))
+                    case Some(false) => Vector(ExecuteScriptLine(entityId, script, nextLineNo + 1))
                     case None => Vector.empty
                 }
                 case _ => Vector.empty

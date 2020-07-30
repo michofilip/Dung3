@@ -12,7 +12,7 @@ import engine.value.basic.ShortValue.ShortNull
 import engine.value.basic.StringValue.StringNull
 import engine.value.basic.{BooleanValue, ByteValue, CharValue, DoubleValue, FloatValue, IntValue, LongValue, ShortValue, StringValue}
 
-case class ValueContainer(values: Map[String, Value[_]]) {
+case class ValueContainer(values: Map[String, Value[_]] = Map.empty) {
     def setValue(name: String, value: Value[_]): ValueContainer =
         ValueContainer(values + (name -> value))
 

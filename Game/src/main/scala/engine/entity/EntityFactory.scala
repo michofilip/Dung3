@@ -16,18 +16,18 @@ class EntityFactory(implicit physicsSelectorRepository: PhysicsSelectorRepositor
         val nameKey = NameKey.Player
         val state = State.Standing
 
-        val stateContainerOpt = Some(StateContainer(state, timestamp))
-        val positionContainerOpt = Some(PositionContainer(position, timestamp))
-        val physicsContainerOpt = physicsSelectorRepository.getPhysicsSelector(nameKey)
+        val stateContainer = Some(StateContainer(state, timestamp))
+        val positionContainer = Some(PositionContainer(position, timestamp))
+        val physicsContainer = physicsSelectorRepository.getPhysicsSelector(nameKey)
             .flatMap(PhysicsContainer.initialise(Some(state)))
-        val animationContainerOpt = animationSelectorRepository.getAnimationSelector(nameKey)
+        val animationContainer = animationSelectorRepository.getAnimationSelector(nameKey)
             .flatMap(AnimationContainer.initialize(Some(state), Some(position.direction), timestamp))
 
         Entity(id = id, nameKey = nameKey, initialTimestamp = timestamp)
-            .setStateContainerOpt(stateContainerOpt)
-            .setPositionContainerOpt(positionContainerOpt)
-            .setPhysicsContainerOpt(physicsContainerOpt)
-            .setAnimationContainerOpt(animationContainerOpt)
+            .setStateContainer(stateContainer)
+            .setPositionContainer(positionContainer)
+            .setPhysicsContainer(physicsContainer)
+            .setAnimationContainer(animationContainer)
             .updatePhysics()
             .updateAnimation()
     }

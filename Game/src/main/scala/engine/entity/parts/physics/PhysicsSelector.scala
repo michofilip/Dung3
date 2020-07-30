@@ -3,7 +3,7 @@ package engine.entity.parts.physics
 import engine.entity.parts.state.State
 
 case class PhysicsSelector(physics: Map[Option[State], Physics]) {
-    def select(stateOpt: Option[State]): Option[Physics] = physics.get(stateOpt)
+    def select(state: Option[State]): Option[Physics] = physics.get(state)
 }
 
 object PhysicsSelector {
