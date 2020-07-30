@@ -5,6 +5,8 @@ import engine.repository.{AnimationRepository, AnimationSelectorRepository, Enti
 import engine.temporal.Timestamp
 import engine.{GameContext, GameService}
 
+import scala.annotation.tailrec
+
 object MainV3 extends App {
     implicit val physicsRepository: PhysicsRepository = new PhysicsRepository()
     implicit val physicsSelectorRepository: PhysicsSelectorRepository = new PhysicsSelectorRepository()
@@ -22,11 +24,21 @@ object MainV3 extends App {
 
     val entityRepository = EntityRepository(Seq(entity))
     val events = Vector[Event](PositionEvents.Step(1, Direction.South))
-    val world0 = GameContext(initialTimestamp, 1, entityRepository, events)
-    val world1 = gameService.nextFrame(Vector(), initialTimestamp)(world0)
-    val world2 = gameService.nextFrame(Vector(), initialTimestamp)(world1)
+    //    val world0 = GameContext(initialTimestamp, 1, entityRepository, events)
+    //    val world1 = gameService.nextFrame(Vector(), initialTimestamp)(world0)
+    //    val world2 = gameService.nextFrame(Vector(), initialTimestamp)(world1)
+    //
+    //    println(world0)
+    //    println(world1)
+    //    println(world2)
 
-    println(world0)
-    println(world1)
-    println(world2)
+    @tailrec
+    def processGame(i: Int)(implicit gameContext: GameContext): Unit = {
+        println(gameContext)
+        if (i > 0) {
+            processGame(i - 1)(gameService.nextFrame(Vector(), initialTimestamp))
+        }
+    }
+
+    processGame(2)(GameContext(initialTimestamp, 1, entityRepository, events))
 }
